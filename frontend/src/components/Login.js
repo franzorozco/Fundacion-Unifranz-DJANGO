@@ -1,53 +1,48 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/authService";
+import "./Login.css";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://127.0.0.1:8000/api/token/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username,
-        password
-      })
-    });
-
-    const data = await response.json();
+    const data = await loginUser(username, password);
 
     if (data.access) {
-      // 🔥 Guardar token
       localStorage.setItem("token", data.access);
-      alert("Login exitoso 🚀");
+      navigate("/dashboard");
     } else {
-      alert("Error en login ❌");
+      setError("Credenciales incorrectas");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className="login-container">
+      <form className="login-box" onSubmit={handleLogin}>
+        <h2>Iniciar Sesión</h2>
+
+        {error && <p className="error">{error}</p>}
+
         <input
           type="text"
           placeholder="Usuario"
-          value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
 
         <input
           type="password"
           placeholder="Contraseña"
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="submit">Iniciar sesión</button>
+        <button type="submit">Entrar</button>
       </form>
     </div>
   );
