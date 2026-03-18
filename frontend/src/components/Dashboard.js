@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 import "./Dashboard.css";
 
 function Dashboard() {
@@ -14,9 +15,15 @@ function Dashboard() {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/");
+        }
+        return res.json();
+      })
       .then((data) => setDonaciones(data));
-  }, []);
+  }, [navigate]);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -24,19 +31,27 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard">
-      <header>
-        <h1>Dashboard</h1>
-        <button onClick={logout}>Cerrar sesión</button>
-      </header>
+    <div className="layout">
+      <Sidebar />
 
-      <div className="cards">
-        {donaciones.map((d) => (
-          <div className="card" key={d.id}>
-            <h3>{d.titulo}</h3>
-            <p>{d.descripcion}</p>
-          </div>
-        ))}
+      <div className="content">
+        <header className="dashboard-header">
+          <h1>Dashboard</h1>
+          <button onClick={logout}>Cerrar sesión</button>
+        </header>
+
+        <div className="cards">
+          {donaciones.length === 0 ? (
+            <p>No hay donaciones aún</p>
+          ) : (
+            donaciones.map((d) => (
+              <div className="card" key={d.id}>
+                <h3>{d.titulo}</h3>
+                <p>{d.descripcion}</p>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
