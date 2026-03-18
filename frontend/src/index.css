@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+:root {
+  --primary: #14b8a6;   /* Turquesa */
+  --secondary: #ec4899; /* Rosa */
+  --bg: #f8fafc;        /* Fondo claro */
+  --text: #1e293b;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
