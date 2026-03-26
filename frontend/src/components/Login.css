@@ -1,76 +1,344 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+:root {
+  --primary: #14b8a6;
+  --secondary: #ec4899;
+  --background: #f9fafb;
 }
 
-.login-container {
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.login-wrapper {
+  display: flex;
+  width: 100%;
   height: 100vh;
+  overflow: hidden;
+}
+
+.login-wrapper.active {
+  flex-direction: row-reverse;
+}
+
+.login-left {
+  width: 50%;
+  background-image: url("../assets/Fundacion_figura_1.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #14b8a6, #ec4899);
 }
 
-.login-box {
-  background: white;
-  padding: 40px;
-  border-radius: 15px;
-  width: 320px;
+.login-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 184, 166, 0.8),
+    rgba(236, 72, 153, 0.8)
+  );
+}
+
+.overlay {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: center;
+
+  width: 50%;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
-  animation: fadeIn 0.5s ease-in-out;
+  justify-content: center;
+  align-items: center; 
+
+  padding: 30px;
 }
 
-.login-box h2 {
-  text-align: center;
-  margin-bottom: 20px;
+
+.login-left,
+.login-right {
+  transition: all 0.6s ease-in-out;
+}
+
+.overlay h1 {
+  font-size: 40px;
+  margin: 0;
+}
+
+.overlay p {
+  font-size: 16px;
+}
+
+.switch-btn {
+  padding: 10px 20px;
+  border: none;
+  background: white;
   color: var(--primary);
-}
-
-.login-box input {
-  margin: 10px 0;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: 600;
   transition: 0.3s;
 }
 
-.login-box input:focus {
+.switch-btn:hover {
+  transform: scale(1.05);
+}
+
+.login-right {
+  width: 50%;
+  background: var(--background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 40px;
+
+}
+
+.back-home {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  color: #374151;
+  transition: 0.2s;
+}
+
+.back-home:hover {
+  color: var(--primary);
+  transform: translateX(-3px);
+}
+
+.form-container {
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  height: 420px;
+}
+
+.form {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.login-form {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 2;
+}
+
+.register-form {
+  opacity: 0;
+  transform: translateX(80px) scale(0.95);
+  z-index: 1;
+}
+
+.login-wrapper.active .login-form {
+  opacity: 0;
+  transform: translateX(-80px) scale(0.95);
+}
+
+.login-wrapper.active .register-form {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 2;
+}
+
+.form h2 {
+  text-align: center;
+  color: var(--primary);
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-weight: 500;
+  background: white;
+  transition: all 0.25s ease;
+}
+
+.social-btn img {
+  width: 18px;
+}
+
+.social-btn.apple {
+  background: black;
+  color: white;
+  border: none;
+}
+
+.social-btn.facebook {
+  background: #1877f2;
+  color: white;
+  border: none;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.divider {
+  text-align: center;
+  margin: 15px 0;
+  position: relative;
+}
+
+.divider span {
+  background: var(--background);
+  padding: 0 10px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #e5e7eb;
+  top: 50%;
+  left: 0;
+  z-index: -1;
+}
+
+.form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: 0.25s;
+}
+
+.form input:focus {
   border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
   outline: none;
 }
 
-.login-box button {
-  margin-top: 15px;
+.form button {
+  margin-top: 10px;
   padding: 12px;
   background: var(--primary);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   transition: 0.3s;
 }
 
-.login-box button:hover {
+.form button:hover {
   background: var(--secondary);
 }
 
-.error {
-  color: red;
-  font-size: 14px;
+
+.login-wrapper.active .overlay {
+  width: 100%;
   text-align: center;
 }
 
-/* Animación */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+
+
+.overlay h1 {
+  width: 100%;
+  text-align: center;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 13px;
+  text-align: center;
+}
+
+.login-left {
+  transform: translateX();
+}
+
+.login-right {
+  transform: translateX(0);
+}
+
+.login-wrapper.active .login-left {
+  transform: translateX(0%);
+}
+
+.login-wrapper.active .login-right {
+  transform: translateX(0%);
+}
+
+
+@media (max-width: 900px) {
+  .login-wrapper {
+    flex-direction: column !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .login-left {
+    width: 100%;
+    height: 35vh;
+  }
+
+  .login-right {
+    width: 100%;
+    height: 65vh;
+    padding: 20px;
+  }
+
+  .form-container {
+    position: static;
+    height: auto;
+  }
+
+  .form {
+    position: relative;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .back-home {
+    top: 15px;
+    left: 15px;
   }
 }

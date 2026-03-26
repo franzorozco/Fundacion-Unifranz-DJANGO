@@ -6,10 +6,19 @@ body {
 }
 
 :root {
-  --primary: #14b8a6;   /* Turquesa */
-  --secondary: #ec4899; /* Rosa */
-  --bg: #f8fafc;        /* Fondo claro */
+  --primary: #14b8a6;  
+  --secondary: #ec4899;
+  --bg: #f8fafc;      
   --text: #1e293b;
+}
+
+html, body {
+  overflow-y: scroll; 
+  scrollbar-width: none; 
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 code {

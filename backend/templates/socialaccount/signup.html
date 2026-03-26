@@ -1,0 +1,99 @@
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Completar registro</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.wrapper{
+    display:flex;
+    height:100vh;
+}
+
+.left{
+    flex:1;
+    background:linear-gradient(135deg,#14b8a6,#ec4899);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+}
+
+.right{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f9fafb;
+}
+
+.box{
+    width:340px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:1px solid #ddd;
+}
+
+button{
+    width:100%;
+    margin-top:15px;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#14b8a6;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="left">
+    <div>
+        <h1>Casi listo</h1>
+        <p>Solo necesitamos algunos datos más</p>
+    </div>
+</div>
+
+<div class="right">
+<div class="box">
+
+<h2>Completar registro</h2>
+
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+
+<button type="submit">
+Finalizar registro
+</button>
+
+</form>
+
+</div>
+</div>
+
+</div>
+
+</body>
+</html>
