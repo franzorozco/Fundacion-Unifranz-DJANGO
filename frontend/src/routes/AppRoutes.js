@@ -13,6 +13,11 @@ import Dashboard from "../components/Dashboard";
 import SocialLoginSuccess from "../pages/SocialLoginSuccess";
 import Home from "../pages/Home";
 import PageTransition from "../components/PageTransition";
+import Users from "../components/Users";
+import Roles from "../components/Roles";
+import Skills from "../components/Skills";
+import Profile from "../pages/Profile";
+import Volunteers from "../pages/Volunteers";
 
 
 function AnimatedRoutes({ token }) {
@@ -31,6 +36,12 @@ function AnimatedRoutes({ token }) {
           }
         />
 
+        <Route path="/users" element={<Users />} />
+        <Route path="/roles" element={<Roles />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/skills" element={<Skills />} />
+        <Route path="/volunteers" element={<Volunteers />} />
+        
         <Route
           path="/login"
           element={

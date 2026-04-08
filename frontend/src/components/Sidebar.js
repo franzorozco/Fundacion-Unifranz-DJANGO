@@ -6,7 +6,8 @@ import {
   Users,
   Megaphone,
   LogOut,
-  Menu
+  Menu,
+  Brain // 🔥 icono para skills
 } from "lucide-react";
 import "./Sidebar.css";
 
@@ -19,8 +20,9 @@ function Sidebar() {
 
   const menu = [
     { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-    { name: "Donaciones", icon: HeartHandshake, path: "/donaciones" },
-    { name: "Voluntarios", icon: Users, path: "/voluntarios" },
+    { name: "Usuarios", icon: HeartHandshake, path: "/users" }, // 🔧 corregí typo
+    { name: "Roles", icon: Users, path: "/roles" },
+    { name: "Skills", icon: Brain, path: "/skills" }, // 🔥 NUEVO
     { name: "Campañas", icon: Megaphone, path: "/campanas" },
   ];
 

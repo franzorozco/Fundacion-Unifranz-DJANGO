@@ -45,7 +45,14 @@ function Dashboard() {
         return res.json();
       })
       .then((data) => {
-        setDonaciones(data);
+        if (Array.isArray(data)) {
+          setDonaciones(data);
+        } else if (Array.isArray(data.results)) {
+          setDonaciones(data.results); // Django con paginación
+        } else {
+          setDonaciones([]); // fallback seguro
+        }
+
         setLoading(false);
       })
       .catch(() => setLoading(false));

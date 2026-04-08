@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -5,29 +6,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-...'
 DEBUG = True
-SITE_ID = 1
-LOGIN_REDIRECT_URL = '/accounts/profile/'
+
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-SESSION_COOKIE_SAMESITE = "Lax"
-SESSION_COOKIE_SECURE = False
 
-CSRF_COOKIE_SAMESITE = "Lax"
-CSRF_COOKIE_SECURE = False
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-]
 
-CORS_ALLOW_CREDENTIALS = True
-
-REST_USE_JWT = True
-REST_AUTH = {
-    'TOKEN_MODEL': None
+# --------------------
+# DATABASE
+# --------------------
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'donaciones_db',
+        'USER': 'admin',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-
+# --------------------
+# APPS
+# --------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,88 +39,38 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django.contrib.sites',
-
     'rest_framework',
     'corsheaders',
-
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
-
+    'users',
     'core',
 ]
 
+# --------------------
+# MIDDLEWARE
+# --------------------
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
+
+# --------------------
+# URLS
+# --------------------
 ROOT_URLCONF = 'backend.urls'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
-
-CORS_ALLOW_ALL_ORIGINS = True
-
-
-CORS_ALLOW_HEADERS = [
-    "content-type",
-    "authorization",
-]
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-}
-
-ACCOUNT_LOGIN_METHODS = {'email'}
-
-ACCOUNT_SIGNUP_FIELDS = [
-    'email*',
-    'password1*',
-    'password2*',
-]
-
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-
-SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_LOGIN_ON_GET = True
-
-SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
-SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
-
-
-LOGIN_REDIRECT_URL = '/dashboard/'
-LOGOUT_REDIRECT_URL = '/login/'
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
+# --------------------
+# TEMPLATES
+# --------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -130,20 +83,78 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
-    },
+    }
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+# --------------------
+# AUTH
+# --------------------
+AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# --------------------
+# DJANGO REST FRAMEWORK
+# --------------------
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
 }
 
+# --------------------
+# JWT
+# --------------------
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+}
+
+# --------------------
+# CORS
+# --------------------
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+]
+
+# --------------------
+# CSRF / SESSION
+# --------------------
+SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE = False
+
+CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SECURE = False
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+# --------------------
+# LOCALIZATION
+# --------------------
 LANGUAGE_CODE = 'es-bo'
 TIME_ZONE = 'America/La_Paz'
 
 USE_I18N = True
 USE_TZ = True
 
+# --------------------
+# STATIC
+# --------------------
 STATIC_URL = 'static/'
+
+# --------------------
+# LOGIN REDIRECTS
+# --------------------
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/login/'

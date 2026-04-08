@@ -1,0 +1,30 @@
+:root {
+  --primary: #3BAAD8;
+  --primary-dark: #2f96bf;
+  --secondary: #EC3A8C;
+  --secondary-dark: #d72f7c;
+
+  --text: #333;
+  --text-light: #666;
+  --background: #ffffff;
+  --background-soft: #f7fafc;
+
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: transparent; /* 🔥 IMPORTANTE */
+  color: var(--text);
+}

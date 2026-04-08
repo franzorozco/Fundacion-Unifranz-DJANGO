@@ -3,15 +3,80 @@ import { Link } from "react-router-dom";
 import { LogIn, Rocket, Info, LayoutDashboard } from "lucide-react";
 import "./home.css";
 import { Menu, X } from "lucide-react";
+import Navbar from "../components/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
+import InteractiveBackground from "../components/InteractiveBackground";
+
+
+
 const images = [
   "https://images.unsplash.com/photo-1593113630400-ea4288922497",
   "https://images.unsplash.com/photo-1559027615-cd4628902d4a",
   "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6"
 ];
+const text = "Conectamos personas que quieren ayudar";
+
+
+
+const Counter = ({ value }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = value;
+
+    const interval = setInterval(() => {
+      start += Math.ceil(end / 40);
+      if (start >= end) {
+        start = end;
+        clearInterval(interval);
+      }
+      setCount(start);
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [value]);
+
+  return (
+    <motion.h3
+      initial={{ scale: 0.5, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true }}
+    >
+      +{count}
+    </motion.h3>
+  );
+};
+
+
+const MagneticButton = ({ children, className }) => {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  return (
+    <motion.div
+      className={className}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        setPos({ x: x * 0.3, y: y * 0.3 }); // más fuerte
+      }}
+      onMouseLeave={() => setPos({ x: 0, y: 0 })}
+animate={{
+  x: pos.x,
+  y: pos.y
+}}
+transition={{ type: "spring", stiffness: 50 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 
 function HeroImage() {
   const [index, setIndex] = useState(0);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,20 +86,26 @@ function HeroImage() {
     return () => clearInterval(interval);
   }, []);
 
+const handleMouseMove = (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 60;
+  const y = (e.clientY / window.innerHeight - 0.5) * 60;
+  setPos({ x, y });
+};
+
   return (
-    <div className="hero-image">
+    <div className="hero-image" onMouseMove={handleMouseMove}>
       <AnimatePresence mode="wait">
         <motion.img
           key={index}
           src={images[index]}
           alt="Voluntariado"
-
+          style={{
+            transform: `translate(${pos.x}px, ${pos.y}px)`
+          }}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-
+          transition={{ duration: 0.8 }}
           className="hero-img"
         />
       </AnimatePresence>
@@ -63,44 +134,32 @@ function Home() {
 
   return (
     <div className="home">
-
+      <InteractiveBackground />
       {/* NAVBAR */}
-      <nav className="navbar">
-        <Link to="/" className="logo">
-          <img src="/logo_fundacion.png" alt="Fundación Solidaria" />
-        </Link>
-
-        <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <X /> : <Menu />}
-        </div>
-
-        <ul className={`menu ${menuOpen ? "active" : ""}`}>
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#nosotros">Nosotros</a></li>
-          <li><a href="#como-funciona">Cómo ayudar</a></li>
-          <li><a href="#impacto">Impacto</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-
-        <div className="auth-buttons">
-          {isLogged ? (
-            <Link to="/dashboard" className="dashboard-btn">
-              <LayoutDashboard size={18} />
-              Ir al panel
-            </Link>
-          ) : (
-            <Link to="/login" className="login-btn">
-              <LogIn size={18} />
-              Iniciar sesión
-            </Link>
-          )}
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HERO */}
-      <section className="hero" id="inicio">
+      <motion.section
+        className="hero"
+        id="inicio"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="hero-text">
-          <h1>Conectamos personas que quieren ayudar</h1>
+          <h1>
+  {text.split("").map((char, i) => (
+<motion.span
+  key={i}
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ delay: i * 0.02 }}
+>
+      {char}
+    </motion.span>
+  ))}
+</h1>
           <p>
             Plataforma para donaciones y voluntariado que apoya a comunidades
             vulnerables. Dona, participa y genera impacto real.
@@ -113,21 +172,25 @@ function Home() {
                 Ir a mi panel
               </Link>
             ) : (
-              <Link to="/login" className="primary-btn">
-                <Rocket size={18} />
-                Empezar ahora
-              </Link>
+<MagneticButton>
+  <Link to="/login" className="primary-btn">
+    <Rocket size={18} />
+    Empezar ahora
+  </Link>
+</MagneticButton>
             )}
+<MagneticButton>
+  <a href="#como-funciona" className="secondary-btn">
+    <Info size={18} />
+    Cómo funciona
+  </a>
+</MagneticButton>
 
-            <a href="#como-funciona" className="secondary-btn">
-              <Info size={18} />
-              Cómo funciona
-            </a>
           </div>
         </div>
 
         <HeroImage />
-      </section>
+      </motion.section>
 
       {/* NOSOTROS */}
       <section className="about" id="nosotros">
@@ -137,22 +200,39 @@ function Home() {
           voluntarios para apoyar a comunidades vulnerables mediante tecnología.
         </p>
 
-        <div className="about-cards">
-          <div className="card">
-            <h3>Donaciones</h3>
-            <p>Conecta tus donaciones con quienes más las necesitan.</p>
-          </div>
- 
-          <div className="card">
-            <h3>Voluntariado</h3>
-            <p>Participa en actividades solidarias cerca de tu ubicación.</p>
-          </div>
-
-          <div className="card">
-            <h3>Impacto</h3>
-            <p>Seguimiento real de la ayuda entregada.</p>
-          </div>
-        </div>
+<motion.div
+  className="about-cards"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }} // 🔥 clave
+  variants={{
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.25
+      }
+    }
+  }}
+>
+{[
+  { title: "Donaciones", link: "#" },
+  { title: "Voluntarios", link: "/volunteers" },
+  { title: "Impacto", link: "#" }
+].map((item, i) => (
+  <motion.div
+    key={i}
+    className="card"
+    variants={{
+      hidden: { opacity: 0, y: 30 },
+      visible: { opacity: 1, y: 0 }
+    }}
+  >
+    <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
+      <h3>{item.title}</h3>
+    </Link>
+  </motion.div>
+))}
+</motion.div>
       </section>
 
       {/* COMO FUNCIONA */}
@@ -184,22 +264,20 @@ function Home() {
       <section className="impact" id="impacto">
         <h2>Nuestro impacto</h2>
 
-        <div className="stats">
-          <div className="stat">
-            <h3>+500</h3>
-            <p>Donaciones realizadas</p>
-          </div>
+        <div className="stat">
+  <Counter value={500} />
+  <p>Donaciones realizadas</p>
+</div>
 
-          <div className="stat">
-            <h3>+200</h3>
-            <p>Voluntarios activos</p>
-          </div>
+<div className="stat">
+  <Counter value={200} />
+  <p>Voluntarios activos</p>
+</div>
 
-          <div className="stat">
-            <h3>+50</h3>
-            <p>Comunidades apoyadas</p>
-          </div>
-        </div>
+<div className="stat">
+  <Counter value={50} />
+  <p>Comunidades apoyadas</p>
+</div>
       </section>
 
       {/* CTA */}
