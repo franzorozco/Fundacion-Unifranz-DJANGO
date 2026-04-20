@@ -1,0 +1,11 @@
+pip install django-allauth dj-rest-auth
+pip install requests
+pip install cryptography
+pip install --upgrade pip
+pip install cryptography
+
+
+
+
+
+
