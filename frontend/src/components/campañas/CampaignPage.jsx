@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import CampaignForm from "./CampaignForm";
+import "./Campaigns.css";
 import {
   getCampaigns,
   createCampaign,
@@ -225,29 +226,24 @@ const loadCampaigns = async () => {
       </div>
 
       {/* MODAL */}
-
-      
       {modalOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          
 
-        
-  <div className="modal-overlay">
-    <div className="modal">
-      <h3>{editing ? "Editar campaña" : "Crear campaña"}</h3>
+          <div onClick={(e) => e.stopPropagation()} className="modal">
+            <h3>{editing ? "Editar campaña" : "Crear campaña"}</h3>
 
-      <CampaignForm
-        initialData={editing}
-        onSuccess={() => {
-          closeModal();
-          loadCampaigns();
-        }}
-      />
+            <CampaignForm
+              initialData={editing}
+              onSuccess={() => {
+                closeModal();
+                loadCampaigns();
+              }}
+            />
+          </div>
 
-      <div className="modal-actions">
-
-      </div>
-    </div>
-  </div>
-)}
+        </div>
+      )}
     </div>
   );
 }

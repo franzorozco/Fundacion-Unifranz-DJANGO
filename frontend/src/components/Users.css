@@ -156,7 +156,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
+
+  background: rgba(0, 0, 0, 0.5) !important; /* 🔥 fondo oscuro correcto */
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,12 +166,17 @@
 }
 
 .modal {
-  background: white;
+  background: #f9fafb !important; /* 🔥 fondo claro correcto */
   padding: 25px;
   border-radius: 16px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgb(255, 252, 252);
+}
+
+.modal h3 {
+  color: var(--primary);
+  margin-bottom: 20px;
 }
 
 .modal input,
@@ -178,9 +185,9 @@
   margin-bottom: 12px;
   padding: 10px;
   border-radius: 10px;
-    color: var(--text);
+    color: black !important; /* forzar texto oscuro */
   background: #fff;
-  border: 1px solid var(--border);
+  border: 1px solid black !important;
 }
 
 .modal-actions {
@@ -189,6 +196,13 @@
   gap: 10px;
 }
 
+.input-error {
+  color: #000000 !important;
+}
+
+textarea {
+  color: black !important; /* forzar texto oscuro */
+}
 /* ================= MODAL FULLSCREEN (FIX PRINCIPAL) ================= */
 .modal-overlay.full {
   position: fixed;
@@ -223,7 +237,7 @@
 .modal-header {
   position: sticky;
   top: 0;
-  background: white;
+  background: rgb(0, 0, 0);
   padding: 20px 30px;
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -315,7 +329,7 @@
   border-radius: 10px;
   border: 1px solid var(--border);
   font-size: 14px;
-  background: #f9fafb;
+  background: #000000;
   transition: 0.2s;
 }
 
@@ -323,7 +337,7 @@
 .profile-section textarea:focus,
 .profile-section select:focus {
   border-color: var(--primary);
-  background: white;
+  background: rgb(0, 0, 0);
   box-shadow: 0 0 0 2px rgba(59,170,216,0.15);
 }
 
@@ -370,7 +384,7 @@
 
 /* ================= EXTRA ================= */
 .group-header {
-  background: rgba(0,0,0,0.04);
+  background: rgb(255, 255, 255);
   font-weight: 600;
   color: var(--primary);
   text-transform: uppercase;
@@ -444,6 +458,6 @@
 .full-modal textarea:focus {
   border-color: var(--primary);
   outline: none;
-  color: #1f2937; /* asegura que el texto escrito sea visible al hacer focus */
+  color: #ffffff; /* asegura que el texto escrito sea visible al hacer focus */
   background: white;
 }

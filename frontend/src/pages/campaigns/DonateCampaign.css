@@ -1,0 +1,374 @@
+.donate-page {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* =========================
+   🔥 HERO
+========================= */
+.donate-hero {
+  position: relative;
+  height: 70vh;
+  overflow: hidden;
+  background: #000;
+  border-bottom: 1px solid var(--border);
+}
+
+.donate-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
+}
+
+.donate-overlay {
+  position: absolute;
+  bottom: 0;
+  padding: 50px;
+  width: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+}
+
+.donate-overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.donate-overlay p {
+  color: var(--muted);
+}
+
+.donate-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  color: var(--muted);
+}
+
+/* =========================
+   📦 LAYOUT PRINCIPAL
+========================= */
+.donate-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin: 20px;
+}
+
+/* =========================
+   💰 FORMULARIO
+========================= */
+.donate-formBox {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 30px;
+  animation: slideInLeft 0.4s ease;
+}
+
+.donate-formBox h2 {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.donate-formBox label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.donate-formBox input,
+.donate-formBox textarea,
+.donate-formBox select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+  transition: 0.2s;
+}
+
+.donate-formBox input:focus,
+.donate-formBox textarea:focus,
+.donate-formBox select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
+}
+
+.donate-formBox textarea {
+  height: 110px;
+  resize: none;
+}
+
+/* =========================
+   📦 ITEMS
+========================= */
+.donate-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.02);
+  transition: 0.2s;
+}
+
+.donate-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+/* =========================
+   🔘 BOTONES
+========================= */
+.btn-add {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(0,123,255,0.1);
+  color: var(--primary);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-add:hover {
+  background: rgba(0,123,255,0.2);
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-remove:hover {
+  transform: scale(1.1);
+}
+
+.btn-donate {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn-donate:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-activity {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn-activity:hover {
+  background: var(--secondary-dark);
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   📊 RESUMEN
+========================= */
+.donate-summary {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  height: fit-content;
+  animation: slideInRight 0.4s ease;
+}
+
+.donate-summary h3 {
+  margin-bottom: 10px;
+}
+
+.donate-summary p {
+  margin: 6px 0;
+  color: var(--muted);
+}
+
+.summary-box {
+  margin-top: 15px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.summary-box svg {
+  color: var(--primary);
+}
+
+/* =========================
+   ⏳ LOADING
+========================= */
+.donate-loading {
+  padding: 50px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* =========================
+   ✨ ANIMACIONES
+========================= */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .donate-container {
+    grid-template-columns: 1fr;
+  }
+
+  .donate-item {
+    grid-template-columns: 1fr;
+  }
+
+  .donate-overlay h1 {
+    font-size: 2rem;
+  }
+}
+
+.img-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.img-preview-grid img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  transition: 0.2s;
+}
+
+.img-preview-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* salida suave del formulario */
+.hide-form {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+/* pantalla de éxito */
+.donate-success {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  animation: popIn 0.6s ease forwards;
+}
+
+/* animación de entrada */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* check animado */
+.check-circle {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: white;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.donate-success-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

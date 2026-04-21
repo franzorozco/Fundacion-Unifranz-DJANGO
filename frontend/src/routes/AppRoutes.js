@@ -16,9 +16,15 @@ import PageTransition from "../components/PageTransition";
 import Users from "../components/Users";
 import Roles from "../components/Roles";
 import Skills from "../components/Skills";
-import Profile from "../pages/Profile";
-import Volunteers from "../pages/Volunteers";
+import Profile from "../pages/Profile/Profile";
+import MyActivity from "../pages/Profile/MyActivity";
+import Volunteers from "../pages/volunteers/Volunteers";
+
 import CampaignPage from "../components/campañas/CampaignPage";
+import ExploreCampaigns from "../pages/campaigns/ExploreCampaigns";
+import CampaignParticipation from "../pages/campaigns/CampaignParticipation";
+import DonateCampaign from "../pages/campaigns/DonateCampaign";
+
 
 function AnimatedRoutes({ token }) {
   const location = useLocation();
@@ -41,7 +47,12 @@ function AnimatedRoutes({ token }) {
         <Route path="/profile" element={<Profile />} />
         <Route path="/skills" element={<Skills />} />
         <Route path="/volunteers" element={<Volunteers />} />
+        <Route path="/explore-campaigns" element={<ExploreCampaigns />} />
         <Route path="/campaigns" element={<CampaignPage />} />
+        <Route path="/campaigns/:id/participate" element={<CampaignParticipation />} />
+        <Route path="/campaigns/:id/donate" element={<DonateCampaign />} />
+        
+
         <Route
           path="/login"
           element={
@@ -63,6 +74,19 @@ function AnimatedRoutes({ token }) {
             </PageTransition>
           }
         />
+
+        <Route
+  path="/my-activity"
+  element={
+    token ? (
+      <PageTransition>
+        <MyActivity />
+      </PageTransition>
+    ) : (
+      <Navigate to="/login" />
+    )
+  }
+/>
 
         <Route
           path="/dashboard"

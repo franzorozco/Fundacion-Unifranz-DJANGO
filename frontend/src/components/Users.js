@@ -227,14 +227,6 @@ const openProfile = async (user) => {
   };
 
 
-
-
-
-
-
-
-
-
   const getProcessedUsers = () => {
     let filtered = Array.isArray(users) ? [...users] : [];
 
@@ -555,50 +547,50 @@ const openEdit = (user) => {
             <h3>{editingUser ? "Editar usuario" : "Crear usuario"}</h3>
 
             <div className="form-group">
-  <label>Email</label>
-  <input
-    type="email"
-    value={form.email}
-    onChange={(e) => handleChange("email", e.target.value)}
-  />
-  {errors.email && <p className="form-error">{errors.email}</p>}
-</div>
+              <label>Email</label>
+              <input
+                type="email"
+                value={form.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+              />
+              {errors.email && <p className="form-error">{errors.email}</p>}
+            </div>
 
-<div className="form-group">
-  <label>Nombre de usuario</label>
-  <input
-    value={form.username}
-    onChange={(e) => handleChange("username", e.target.value)}
-  />
-  {errors.username && <p className="form-error">{errors.username}</p>}
-</div>
+            <div className="form-group">
+              <label>Nombre de usuario</label>
+              <input
+                value={form.username}
+                onChange={(e) => handleChange("username", e.target.value)}
+              />
+              {errors.username && <p className="form-error">{errors.username}</p>}
+            </div>
 
-<div className="form-group">
-  <label>Contraseña</label>
-  <input
-    type="password"
-    value={form.password}
-    onChange={(e) => handleChange("password", e.target.value)}
-  />
-  {errors.password && <p className="form-error">{errors.password}</p>}
-</div>
+            <div className="form-group">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                value={form.password}
+                onChange={(e) => handleChange("password", e.target.value)}
+              />
+              {errors.password && <p className="form-error">{errors.password}</p>}
+            </div>
 
-<div className="form-group">
-  <label>Rol</label>
-  <select
-    value={form.role || ""}
-    onChange={(e) => handleChange("role", e.target.value)}
-  >
-    <option value="">Selecciona un rol</option>
-      {Array.isArray(roles) &&
-        roles.map((r) => (
-          <option key={r.id} value={r.id}>
-            {r.name}
-          </option>
-      ))}
-  </select>
-  {errors.role && <p className="form-error">{errors.role}</p>}
-</div>
+            <div className="form-group">
+              <label>Rol</label>
+              <select
+                value={form.role || ""}
+                onChange={(e) => handleChange("role", e.target.value)}
+              >
+                <option value="">Selecciona un rol</option>
+                  {Array.isArray(roles) &&
+                    roles.map((r) => (
+                      <option key={r.id} value={r.id}>
+                        {r.name}
+                      </option>
+                  ))}
+              </select>
+              {errors.role && <p className="form-error">{errors.role}</p>}
+            </div>
 
             <div className="modal-actions">
               <button className="cancel-btn" onClick={closeModal}>
@@ -616,289 +608,289 @@ const openEdit = (user) => {
       )}
 
 
-{/* PERFIL EDITABLE */}
-{profileUser && (
-  <div className="modal-overlay full">
-    <div className="full-modal">
-      {/* HEADER */}
-      <div className="modal-header">
-        <h2>Perfil de {profileUser.username}</h2>
-        <button className="cancel-btn" onClick={() => setProfileUser(null)}>
-          ✕
-        </button>
-      </div>
-
-      {/* CONTENT */}
-      <div className="full-modal-content grid-3">
-        {/* DATOS DEL USUARIO */}
-        <div className="profile-section">
-          <h3>Datos del usuario</h3>
-          <div className="profile-grid">
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                value={profileUser.email}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, email: e.target.value })
-                }
-              />
+      {/* PERFIL EDITABLE */}
+      {profileUser && (
+        <div className="modal-overlay full">
+          <div className="full-modal">
+            {/* HEADER */}
+            <div className="modal-header">
+              <h2>Perfil de {profileUser.username}</h2>
+              <button className="cancel-btn" onClick={() => setProfileUser(null)}>
+                ✕
+              </button>
             </div>
 
-            <div className="form-group">
-              <label>Nombre de usuario</label>
-              <input
-                value={profileForm.username}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, username: e.target.value })
-                }
-              />
-            </div>
+            {/* CONTENT */}
+            <div className="full-modal-content grid-3">
+              {/* DATOS DEL USUARIO */}
+              <div className="profile-section">
+                <h3>Datos del usuario</h3>
+                <div className="profile-grid">
+                  <div className="form-group">
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      value={profileUser.email}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, email: e.target.value })
+                      }
+                    />
+                  </div>
 
-            <div className="form-group">
-              <label>Teléfono</label>
-              <input
-                value={profileForm.telefono}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, telefono: e.target.value })
-                }
-              />
-            </div>
+                  <div className="form-group">
+                    <label>Nombre de usuario</label>
+                    <input
+                      value={profileForm.username}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, username: e.target.value })
+                      }
+                    />
+                  </div>
 
-            <div className="form-group">
-              <label>Fecha de nacimiento</label>
-              <input
-                type="date"
-                value={profileForm.fecha_nacimiento}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, fecha_nacimiento: e.target.value })
-                }
-              />
-            </div>
+                  <div className="form-group">
+                    <label>Teléfono</label>
+                    <input
+                      value={profileForm.telefono}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, telefono: e.target.value })
+                      }
+                    />
+                  </div>
 
-            <div className="form-group">
-              <label>Dirección</label>
-              <input
-                value={profileForm.direccion}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, direccion: e.target.value })
-                }
-              />
-            </div>
+                  <div className="form-group">
+                    <label>Fecha de nacimiento</label>
+                    <input
+                      type="date"
+                      value={profileForm.fecha_nacimiento}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, fecha_nacimiento: e.target.value })
+                      }
+                    />
+                  </div>
 
-            <div className="form-group">
-              <label>Biografía</label>
-              <textarea
-                value={profileForm.bio}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, bio: e.target.value })
-                }
-              />
-            </div>
+                  <div className="form-group">
+                    <label>Dirección</label>
+                    <input
+                      value={profileForm.direccion}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, direccion: e.target.value })
+                      }
+                    />
+                  </div>
 
-            <label>
-              <input
-                type="checkbox"
-                checked={profileForm.is_active_volunteer}
-                onChange={(e) =>
-                  setProfileForm({
-                    ...profileForm,
-                    is_active_volunteer: e.target.checked,
-                  })
-                }
-              />
-              Voluntario activo
-            </label>
-          </div>
-        </div>
+                  <div className="form-group">
+                    <label>Biografía</label>
+                    <textarea
+                      value={profileForm.bio}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, bio: e.target.value })
+                      }
+                    />
+                  </div>
 
-        {/* PERFIL DE VOLUNTARIO */}
-        <div className="profile-section">
-          <h3>Perfil de voluntario</h3>
-          <div className="profile-grid">
-            <div className="form-group">
-              <label>Nivel de experiencia (1-5)</label>
-              <input
-                type="number"
-                min="1"
-                max="5"
-                value={volunteerForm.experience_level}
-                onChange={(e) =>
-                  setVolunteerForm({
-                    ...volunteerForm,
-                    experience_level: parseInt(e.target.value),
-                  })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Horas disponibles / semana</label>
-              <input
-                type="number"
-                value={volunteerForm.available_hours_per_week}
-                onChange={(e) =>
-                  setVolunteerForm({
-                    ...volunteerForm,
-                    available_hours_per_week: parseInt(e.target.value),
-                  })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Ciudad</label>
-              <input
-                value={volunteerForm.ciudad}
-                onChange={(e) =>
-                  setVolunteerForm({ ...volunteerForm, ciudad: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>País</label>
-              <input
-                value={volunteerForm.pais}
-                onChange={(e) =>
-                  setVolunteerForm({ ...volunteerForm, pais: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Latitud</label>
-              <input
-                value={volunteerForm.lat}
-                onChange={(e) =>
-                  setVolunteerForm({ ...volunteerForm, lat: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Longitud</label>
-              <input
-                value={volunteerForm.lng}
-                onChange={(e) =>
-                  setVolunteerForm({ ...volunteerForm, lng: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Distancia máxima (km)</label>
-              <input
-                type="number"
-                value={volunteerForm.max_distance_km}
-                onChange={(e) =>
-                  setVolunteerForm({
-                    ...volunteerForm,
-                    max_distance_km: e.target.value,
-                  })
-                }
-              />
-            </div>
-
-            <label>
-              <input
-                type="checkbox"
-                checked={volunteerForm.is_available}
-                onChange={(e) =>
-                  setVolunteerForm({ ...volunteerForm, is_available: e.target.checked })
-                }
-              />
-              Disponible
-            </label>
-          </div>
-        </div>
-
-        {/* HABILIDADES */}
-        <div className="profile-section">
-          <h3>Habilidades</h3>
-          <div className="profile-grid">
-            <div className="form-group">
-              <label>Habilidad</label>
-              <select
-                value={newSkill.skill}
-                onChange={(e) => setNewSkill({ ...newSkill, skill: e.target.value })}
-              >
-                <option value="">Seleccionar</option>
-                {skillsCatalog.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Nivel (%)</label>
-              <input
-                type="number"
-                value={newSkill.level}
-                onChange={(e) => setNewSkill({ ...newSkill, level: e.target.value })}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Años de experiencia</label>
-              <input
-                type="number"
-                value={newSkill.years_experience}
-                onChange={(e) =>
-                  setNewSkill({ ...newSkill, years_experience: e.target.value })
-                }
-              />
-            </div>
-          </div>
-
-          <label>
-            <input
-              type="checkbox"
-              checked={newSkill.is_certified}
-              onChange={(e) =>
-                setNewSkill({ ...newSkill, is_certified: e.target.checked })
-              }
-            />
-            Certificado
-          </label>
-          <button className="primary-btn" onClick={addSkill}>
-            + Agregar habilidad
-          </button>
-
-          <div className="skills-list">
-            {skillsList.map((s, index) => (
-              <div key={index} className="skill-item">
-                <span>
-                  {skillsCatalog.find((x) => x.id == s.skill)?.name} - {s.level}%
-                </span>
-                <button
-                  onClick={() => {
-                    const updated = skillsList.filter((_, i) => i !== index);
-                    setSkillsList(updated);
-                  }}
-                >
-                  ❌
-                </button>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={profileForm.is_active_volunteer}
+                      onChange={(e) =>
+                        setProfileForm({
+                          ...profileForm,
+                          is_active_volunteer: e.target.checked,
+                        })
+                      }
+                    />
+                    Voluntario activo
+                  </label>
+                </div>
               </div>
-            ))}
+
+              {/* PERFIL DE VOLUNTARIO */}
+              <div className="profile-section">
+                <h3>Perfil de voluntario</h3>
+                <div className="profile-grid">
+                  <div className="form-group">
+                    <label>Nivel de experiencia (1-5)</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="5"
+                      value={volunteerForm.experience_level}
+                      onChange={(e) =>
+                        setVolunteerForm({
+                          ...volunteerForm,
+                          experience_level: parseInt(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Horas disponibles / semana</label>
+                    <input
+                      type="number"
+                      value={volunteerForm.available_hours_per_week}
+                      onChange={(e) =>
+                        setVolunteerForm({
+                          ...volunteerForm,
+                          available_hours_per_week: parseInt(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Ciudad</label>
+                    <input
+                      value={volunteerForm.ciudad}
+                      onChange={(e) =>
+                        setVolunteerForm({ ...volunteerForm, ciudad: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>País</label>
+                    <input
+                      value={volunteerForm.pais}
+                      onChange={(e) =>
+                        setVolunteerForm({ ...volunteerForm, pais: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Latitud</label>
+                    <input
+                      value={volunteerForm.lat}
+                      onChange={(e) =>
+                        setVolunteerForm({ ...volunteerForm, lat: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Longitud</label>
+                    <input
+                      value={volunteerForm.lng}
+                      onChange={(e) =>
+                        setVolunteerForm({ ...volunteerForm, lng: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Distancia máxima (km)</label>
+                    <input
+                      type="number"
+                      value={volunteerForm.max_distance_km}
+                      onChange={(e) =>
+                        setVolunteerForm({
+                          ...volunteerForm,
+                          max_distance_km: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={volunteerForm.is_available}
+                      onChange={(e) =>
+                        setVolunteerForm({ ...volunteerForm, is_available: e.target.checked })
+                      }
+                    />
+                    Disponible
+                  </label>
+                </div>
+              </div>
+
+              {/* HABILIDADES */}
+              <div className="profile-section">
+                <h3>Habilidades</h3>
+                <div className="profile-grid">
+                  <div className="form-group">
+                    <label>Habilidad</label>
+                    <select
+                      value={newSkill.skill}
+                      onChange={(e) => setNewSkill({ ...newSkill, skill: e.target.value })}
+                    >
+                      <option value="">Seleccionar</option>
+                      {skillsCatalog.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Nivel (%)</label>
+                    <input
+                      type="number"
+                      value={newSkill.level}
+                      onChange={(e) => setNewSkill({ ...newSkill, level: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Años de experiencia</label>
+                    <input
+                      type="number"
+                      value={newSkill.years_experience}
+                      onChange={(e) =>
+                        setNewSkill({ ...newSkill, years_experience: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={newSkill.is_certified}
+                    onChange={(e) =>
+                      setNewSkill({ ...newSkill, is_certified: e.target.checked })
+                    }
+                  />
+                  Certificado
+                </label>
+                <button className="primary-btn" onClick={addSkill}>
+                  + Agregar habilidad
+                </button>
+
+                <div className="skills-list">
+                  {skillsList.map((s, index) => (
+                    <div key={index} className="skill-item">
+                      <span>
+                        {skillsCatalog.find((x) => x.id == s.skill)?.name} - {s.level}%
+                      </span>
+                      <button
+                        onClick={() => {
+                          const updated = skillsList.filter((_, i) => i !== index);
+                          setSkillsList(updated);
+                        }}
+                      >
+                        ❌
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* FOOTER */}
+            <div className="modal-footer">
+              <button className="cancel-btn" onClick={() => setProfileUser(null)}>
+                Cancelar
+              </button>
+              <button className="primary-btn" onClick={saveProfile}>
+                Guardar cambios
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* FOOTER */}
-      <div className="modal-footer">
-        <button className="cancel-btn" onClick={() => setProfileUser(null)}>
-          Cancelar
-        </button>
-        <button className="primary-btn" onClick={saveProfile}>
-          Guardar cambios
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+      )}
     </div>
 
   );

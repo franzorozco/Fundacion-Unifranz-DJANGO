@@ -125,6 +125,7 @@ class Campaign(models.Model):
 
     def __str__(self):
         return self.title
+        
 # =========================
 # ACTIVIDADES DE CAMPAÑA
 # =========================
@@ -272,3 +273,6 @@ class ActivityVolunteer(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.activity}"
+
+
+        

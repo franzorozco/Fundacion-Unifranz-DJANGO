@@ -33,10 +33,8 @@ function Navbar() {
       </div>
 
       <ul className={`menu ${menuOpen ? "active" : ""}`}>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#como-funciona">Cómo ayudar</a></li>
-        <li><a href="#impacto">Impacto</a></li>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/explore-campaigns">Campañas</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
 
