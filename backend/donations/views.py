@@ -128,6 +128,22 @@ def api_campaign_summary(request, campaign_id):
     return Response(summary)
 
 
+@api_view(["GET"])
+def api_all_donations(request):
+    donations = Donation.objects.all().order_by("-created_at")
+
+    return Response([
+        {
+            "id": d.id,
+            "donor": d.donor.email,
+            "destination_type": d.destination_type,
+            "status": d.status,
+            "money_amount": d.money_amount,
+            "created_at": d.created_at
+        }
+        for d in donations
+    ])
+    
 # =========================
 # ACTIVIDAD USUARIO
 # =========================

@@ -10,6 +10,8 @@ class Donation(models.Model):
     class DonationStatus(models.TextChoices):
         PENDING = "pending", "Pendiente"
         RECEIVED = "received", "Recibida"
+        ACCEPTED = "accepted", "Aceptada"
+        REJECTED = "rejected", "Rechazada"
         DISTRIBUTED = "distributed", "Distribuida"
         CANCELLED = "cancelled", "Cancelada"
 

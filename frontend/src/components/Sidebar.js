@@ -8,8 +8,10 @@ import {
   LogOut,
   Menu,
   Brain,
-  ClipboardList
+  ClipboardList,
+  HandCoins
 } from "lucide-react";
+
 import "./Sidebar.css";
 function Sidebar() {
   const navigate = useNavigate();
@@ -26,7 +28,8 @@ const menu = [
   { name: "Roles", icon: Users, path: "/roles" },
   { name: "Habilidades", icon: Brain, path: "/skills" },
   { name: "Campañas", icon: Megaphone, path: "/campaigns" },
-  { name: "Postulantes a actividades", icon: ClipboardList, path: "/solicitudes" }
+  { name: "Postulantes a actividades", icon: ClipboardList, path: "/solicitudes" },
+  { name: "Donaciones entrantes", icon: HandCoins, path: "/Donation-Incoming" }
 ];
 
   const logout = () => {
