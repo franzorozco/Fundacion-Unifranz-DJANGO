@@ -1,0 +1,51 @@
+.approve-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background: #15803d;
+}
+
+.reject-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reject-btn:hover {
+  background: #b91c1c;
+}
+
+.status-pending {
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+.status-approved {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.status-completed {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

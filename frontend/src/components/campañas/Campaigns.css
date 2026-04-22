@@ -31,3 +31,327 @@
   padding: 15px;
   border-top: 1px solid #eee;
 }
+
+.activity-card {
+  background: #1e1e2f;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.modal.large {
+  width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* =========================
+   OVERLAY
+========================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+
+.modal-overlay h2{
+  color: black;
+}
+/* =========================
+   MODAL PRINCIPAL (NO CAMBIADO)
+========================= */
+.modal.large {
+  background: #fff; /* NO TOCAR */
+  width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  padding: 20px 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   TÍTULO GENERAL
+========================= */
+.modal.large h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* =========================
+   EVENT CARD
+========================= */
+.event-card {
+  background: #f9f9f9;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  transition: 0.2s;
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   DESCRIPCIÓN Y ESTADO
+========================= */
+.event-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #374151; /* gris más limpio */
+}
+
+.event-card b {
+  color: #111827;
+}
+
+/* =========================
+   UBICACIÓN (NUEVO DISEÑO LIMPIO)
+========================= */
+.location-box {
+  margin-top: 10px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* textos de ubicación */
+.location-box p {
+  margin: 0;
+  font-size: 13px;
+  color: #111827; /* 👈 NEGRO COMO PEDISTE */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* iconos (opcional más limpio) */
+.location-box p:first-child {
+  font-weight: 500;
+}
+
+/* =========================
+   SIN UBICACIÓN
+========================= */
+.event-card > p[style] {
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* =========================
+   SCROLL MODAL
+========================= */
+.modal.large::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal.large::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+
+.location-box p,
+.table-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* iconos alineados */
+.location-box svg,
+.table-actions svg {
+  color: #555;
+}
+
+/* mejorar botones */
+.table-actions button {
+  font-size: 13px;
+}
+.no-location{
+  color: #000;
+}
+
+
+.modal.large {
+  color: #111827; /* gris oscuro profesional */
+}
+
+.modal.large h2 {
+  color: #111827;
+}
+
+.event-card h3 {
+  color: #111827;
+  font-weight: 600;
+}
+
+.no-location {
+  color: #ef4444; /* rojo moderno (Tailwind style) */
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.users-table td {
+  color: #111827;
+}
+
+.users-table th {
+  color: #374151;
+  font-weight: 600;
+}
+
+.filters input,
+.filters select {
+  color: #111827;
+}
+
+.location-box {
+  margin-top: 10px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.location-box p {
+  color: #111827;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.location-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.location-form input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  color: #111;
+}
+
+.skills-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ➕ BOTÓN AÑADIR */
+.skill-add-btn {
+  align-self: flex-start;
+  background: var(--primary, #4f46e5);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.skill-add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 📦 CARD */
+.skill-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb; /* gris claro */
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 🔽 SELECT */
+.skill-card select {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* 🔢 INPUT */
+.skill-card input[type="number"] {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  padding: 6px;
+  border-radius: 6px;
+  width: 100px;
+}
+
+/* ☑️ CHECKBOX */
+.skill-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* ❌ DELETE */
+.skill-delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 4px 7px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: 0.2s;
+}
+
+.skill-delete-btn:hover {
+  background: #dc2626;
+}
+
+/* ✏️ EDIT BUTTON */
+.edit-skills-btn {
+  background: var(--primary, #2563eb);
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: 0.2s;
+}
+
+.edit-skills-btn:hover {
+  background: #1d4ed8;
+}

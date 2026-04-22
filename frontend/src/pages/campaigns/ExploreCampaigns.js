@@ -11,6 +11,7 @@ import Navbar from "../../components/Navbar";
 import InteractiveBackground from "../../components/InteractiveBackground";
 import { getCampaigns } from "../../services/campaignService";
 import "./ExploreCampaigns.css";
+import GlobeMap from "../../components/GlobeMap";
 
 
 function ExploreCampaigns() {
@@ -150,18 +151,23 @@ function ExploreCampaigns() {
                         </div>
                       </div>
 
-<Link
-  to={`/campaigns/${c.id}/participate`}
-  className="btn-secondary"
->
-  <HandHelping size={18} />
-  Participar
-</Link>
+                      <Link
+                        to={`/campaigns/${c.id}/participate`}
+                        className="btn-secondary"
+                      >
+                        <HandHelping size={18} />
+                        Participar
+                      </Link>
                     </div>
                   </div>
                 );
               })}
             </div>
+          </section>
+
+          <section className="map-section">
+            <h2>Mapa global de actividades</h2>
+            <GlobeMap />
           </section>
         </>
       )}

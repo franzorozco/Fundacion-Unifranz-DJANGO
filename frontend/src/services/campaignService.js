@@ -1,5 +1,10 @@
 import api from "./api";
 
+export const getActivitiesMap = () =>
+  api.get("/activities-map/");
+
+
+
 // =========================
 // CAMPAIGNS
 // =========================
@@ -33,3 +38,11 @@ export const getCampaignActivities = (id) =>
 export const applyToActivity = (activityId, data) =>
   api.post(`/activities/${activityId}/apply/`, data);
 
+// =========================
+// LOCATIONS
+// =========================
+export const createLocation = (data) =>
+  api.post("/locations/", data);
+
+export const deleteLocation = (id) =>
+  api.delete(`/locations/${id}/`);

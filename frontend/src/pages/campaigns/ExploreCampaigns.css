@@ -304,3 +304,14 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0,123,255,0.1);
 }
+
+.map-section {
+  padding: 80px 20px;
+  text-align: center;
+  background: #f8fafc;
+}
+
+.map-section canvas {
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+}

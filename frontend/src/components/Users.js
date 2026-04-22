@@ -9,6 +9,26 @@ import {
   updateUser,
 } from "../services/authService";
 
+import {
+  Plus,
+  Search,
+  Filter,
+  User,
+  Mail,
+  Edit,
+  Trash2,
+  Eye,
+  Save,
+  X,
+  Shield,
+  UserPlus,
+  Award,
+  MapPin,
+  Phone,
+  Calendar,
+  Briefcase,
+} from "lucide-react";
+
 function Users() {
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -426,15 +446,19 @@ const openEdit = (user) => {
           </div>
 
           <button className="primary-btn" onClick={openCreate}>
-            + Nuevo usuario
+            <Plus size={16} style={{ marginRight: 6 }} />
+            Nuevo usuario
           </button>
         </div>
         <div className="filters">
-          <input
-            placeholder="Buscar por nombre o email..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <div className="search-box">
+            <Search size={16} />
+            <input
+              placeholder="Buscar por nombre o email..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
           <select onChange={(e) => setSelectedRole(e.target.value)}>
             <option value="">Todos los roles</option>
@@ -501,24 +525,18 @@ const openEdit = (user) => {
                       <td>
                         
                         <div className="table-actions">
-                          <button
-                            className="small-btn"
-                            onClick={() => openProfile(u)}
-                          >
-                            Ver perfil
+                          <button className="small-btn" onClick={() => openProfile(u)}>
+                            <Eye size={14} style={{ marginRight: 4 }} />
+                            Ver
                           </button>
 
-                          <button
-                            className="small-btn edit-small"
-                            onClick={() => openEdit(u)}
-                          >
+                          <button className="small-btn edit-small" onClick={() => openEdit(u)}>
+                            <Edit size={14} style={{ marginRight: 4 }} />
                             Editar
-                          </button>
+                          </button>         
 
-                          <button
-                            className="small-btn delete-small"
-                            onClick={() => handleDelete(u.id)}
-                          >
+                          <button className="small-btn delete-small" onClick={() => handleDelete(u.id)}>
+                            <Trash2 size={14} style={{ marginRight: 4 }} />
                             Eliminar
                           </button>
                         </div>
@@ -544,10 +562,16 @@ const openEdit = (user) => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <h3>{editingUser ? "Editar usuario" : "Crear usuario"}</h3>
+            <h3>
+              <UserPlus size={16} style={{ marginRight: 6 }} />
+              {editingUser ? "Editar usuario" : "Crear usuario"}
+            </h3>
 
             <div className="form-group">
-              <label>Email</label>
+              <label>
+                <Mail size={14} style={{ marginRight: 4 }} />
+                Email
+              </label>
               <input
                 type="email"
                 value={form.email}
@@ -557,7 +581,10 @@ const openEdit = (user) => {
             </div>
 
             <div className="form-group">
-              <label>Nombre de usuario</label>
+              <label>
+                <User size={14} style={{ marginRight: 4 }} />
+                Nombre de usuario
+              </label>
               <input
                 value={form.username}
                 onChange={(e) => handleChange("username", e.target.value)}
@@ -576,7 +603,10 @@ const openEdit = (user) => {
             </div>
 
             <div className="form-group">
-              <label>Rol</label>
+              <label>
+                <Shield size={14} style={{ marginRight: 4 }} />
+                Rol
+              </label>
               <select
                 value={form.role || ""}
                 onChange={(e) => handleChange("role", e.target.value)}

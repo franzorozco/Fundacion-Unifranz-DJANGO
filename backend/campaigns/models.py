@@ -199,7 +199,7 @@ class ActivitySkillRequirement(models.Model):
         related_name="activity_requirements"
     )
 
-    # 🔥 NIVEL REQUERIDO (0-100 o 1-5)
+    # 🔥 NIVEL REQUERIDO (1-5)
     required_level = models.PositiveIntegerField(default=50)
 
     is_mandatory = models.BooleanField(default=True)
@@ -217,6 +217,7 @@ class ActivityLocation(models.Model):
         on_delete=models.CASCADE,
         related_name="location"
     )
+    
 
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)

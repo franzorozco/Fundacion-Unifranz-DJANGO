@@ -461,3 +461,7 @@ textarea {
   color: #ffffff; /* asegura que el texto escrito sea visible al hacer focus */
   background: white;
 }
+
+.small-btn svg {
+  vertical-align: middle;
+}

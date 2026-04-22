@@ -31,12 +31,22 @@ class CampaignService:
     def list_campaigns():
         return Campaign.objects.all()
 
-
     # =========================
     # ACTIVITIES
     # =========================
     @staticmethod
     def add_activity(campaign, data):
+        data = data.copy()
+
+        # 🔥 LIMPIAR CAMPOS VACÍOS
+        numeric_fields = ["min_age", "max_age", "required_volunteers", "reward_points", "priority"]
+
+        for field in numeric_fields:
+            if data.get(field) == "":
+                data[field] = None
+
+        # 🔥 SACAR CAMPOS QUE NO SON DEL MODELO
+        data.pop("campaign", None)
         skills = data.pop("skills", [])
         location_data = data.pop("location", None)
 
@@ -45,16 +55,16 @@ class CampaignService:
             **data
         )
 
-        # 🔥 GUARDAR SKILLS
+        # SKILLS
         for s in skills:
             ActivitySkillRequirement.objects.create(
                 activity=activity,
-                skill_id=s["skill"],
+                skill_id=s.get("skill") or s.get("skill_id"),
                 required_level=s.get("required_level", 50),
                 is_mandatory=s.get("is_mandatory", True),
             )
 
-        # 📍 GUARDAR LOCATION
+        # LOCATION
         if location_data:
             ActivityLocation.objects.create(
                 activity=activity,
@@ -63,6 +73,7 @@ class CampaignService:
 
         return activity
 
+    
     @staticmethod
     def update_activity(activity, data):
         for key, value in data.items():

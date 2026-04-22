@@ -7,10 +7,10 @@ import {
   Megaphone,
   LogOut,
   Menu,
-  Brain 
+  Brain,
+  ClipboardList
 } from "lucide-react";
 import "./Sidebar.css";
-
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,13 +18,16 @@ function Sidebar() {
 
   const sidebarRef = useRef(null);
 
-  const menu = [
-    { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-    { name: "Usuarios", icon: HeartHandshake, path: "/users" }, // 🔧 corregí typo
-    { name: "Roles", icon: Users, path: "/roles" },
-    { name: "Habilidades", icon: Brain, path: "/skills" }, // 🔥 NUEVO
-    { name: "Campañas", icon: Megaphone, path: "/campaigns" },
-  ];
+
+
+const menu = [
+  { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+  { name: "Usuarios", icon: HeartHandshake, path: "/users" },
+  { name: "Roles", icon: Users, path: "/roles" },
+  { name: "Habilidades", icon: Brain, path: "/skills" },
+  { name: "Campañas", icon: Megaphone, path: "/campaigns" },
+  { name: "Postulantes a actividades", icon: ClipboardList, path: "/solicitudes" }
+];
 
   const logout = () => {
     if (!window.confirm("¿Cerrar sesión?")) return;

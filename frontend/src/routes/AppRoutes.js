@@ -25,6 +25,7 @@ import ExploreCampaigns from "../pages/campaigns/ExploreCampaigns";
 import CampaignParticipation from "../pages/campaigns/CampaignParticipation";
 import DonateCampaign from "../pages/campaigns/DonateCampaign";
 
+import SolicitudesPage from "../components/SolicitudesPostulantes/SolicitudesPage";
 
 function AnimatedRoutes({ token }) {
   const location = useLocation();
@@ -51,7 +52,18 @@ function AnimatedRoutes({ token }) {
         <Route path="/campaigns" element={<CampaignPage />} />
         <Route path="/campaigns/:id/participate" element={<CampaignParticipation />} />
         <Route path="/campaigns/:id/donate" element={<DonateCampaign />} />
-        
+        <Route
+          path="/solicitudes"
+          element={
+            token ? (
+              <PageTransition>
+                <SolicitudesPage />
+              </PageTransition>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
 
         <Route
           path="/login"

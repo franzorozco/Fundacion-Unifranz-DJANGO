@@ -9,10 +9,17 @@ from users.serializers import UserSerializer
 class ActivityVolunteerSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
+    activity = serializers.SerializerMethodField()
+
     class Meta:
         model = ActivityVolunteer
         fields = "__all__"
 
+    def get_activity(self, obj):
+        return {
+            "id": obj.activity.id,
+            "title": obj.activity.title
+        }
 
 # =========================
 # SKILL REQUIREMENT
@@ -38,11 +45,12 @@ class ActivityLocationSerializer(serializers.ModelSerializer):
 class CampaignActivitySerializer(serializers.ModelSerializer):
     location = ActivityLocationSerializer(read_only=True)
     skill_requirements = ActivitySkillRequirementSerializer(many=True, read_only=True)
-    volunteers = ActivityVolunteerSerializer(many=True, read_only=True)
 
     class Meta:
         model = CampaignActivity
         fields = "__all__"
+
+
 
 
 # =========================
