@@ -32,8 +32,7 @@ export default function EventForm({ campaign, onClose }) {
 
 
 
-  
-  // 🌍 REVERSE GEOCODING (auto dirección)                          
+                         
   const getAddressFromCoords = async (lat, lng) => {
     try {
       const res = await fetch(
@@ -62,7 +61,6 @@ export default function EventForm({ campaign, onClose }) {
   };
 
   const handleSubmit = async () => {
-    // 1️⃣ crear actividad
     const res = await fetch("http://127.0.0.1:8000/api/activities/", {
       method: "POST",
       headers: {
@@ -72,14 +70,13 @@ export default function EventForm({ campaign, onClose }) {
       body: JSON.stringify({
         ...form,
         campaign: campaign.id,
-        skills: skills, // 🔥 AQUI ESTA LA CLAVE
+        skills: skills,
       }),
     });
 
     const activity = await res.json();
     console.log("RESPUESTA BACK:", activity);
 
-    // 2️⃣ crear ubicación
     await fetch(`http://127.0.0.1:8000/api/activities/${activity.id}/location/`, {
       method: "POST",
       headers: {

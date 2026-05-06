@@ -1,85 +1,122 @@
+/* =========================
+   PAGE WRAPPER (NO TOCA NAVBAR)
+========================= */
 .activity-page {
   min-height: 100vh;
   background: var(--bg);
-  padding: 30px;
+  padding: 35px 40px;
   color: var(--text);
 }
 
 /* HEADER */
 .activity-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .activity-header h1 {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
-/* SECCIONES */
+/* =========================
+   SECTIONS
+========================= */
 .section-container {
-  margin-bottom: 35px;
+  margin-bottom: 40px;
 }
 
 .section-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 18px;
   color: var(--text);
-  border-left: 4px solid var(--primary);
-  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* GRID */
+.section-title::before {
+  content: "";
+  width: 5px;
+  height: 18px;
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+/* =========================
+   GRID
+========================= */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
 }
 
-/* CARD */
+/* =========================
+   CARD MODERNA
+========================= */
 .card {
   background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 18px;
   border: 1px solid var(--border);
-  box-shadow: 0 6px 18px var(--shadow);
-  transition: 0.25s ease;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px var(--shadow-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
-/* TITULOS */
+/* TITULO */
 .card h3 {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 700;
   margin-bottom: 10px;
-  color: var(--text);
 }
 
 /* TEXTOS */
 .card p {
-  margin: 4px 0;
   font-size: 13px;
   color: var(--text-soft);
+  margin: 4px 0;
 }
 
-/* STATUS */
+/* =========================
+   STATUS BADGE PRO
+========================= */
 .status {
   display: inline-block;
   padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 20px;
-  font-weight: 500;
-  background: rgba(79, 70, 229, 0.1);
-  color: var(--primary);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-transform: capitalize;
 }
 
-/* ITEMS */
+/* estados visuales */
+.status.pending {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.status.accepted {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.status.rejected {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* =========================
+   ITEMS
+========================= */
 .items {
   margin-top: 10px;
   display: flex;
@@ -88,74 +125,74 @@
 }
 
 .items span {
-  font-size: 12px;
+  font-size: 11px;
   background: var(--bg);
   padding: 4px 8px;
   border-radius: 8px;
-  color: var(--text-soft);
   border: 1px solid var(--border);
+  color: var(--text-soft);
 }
 
-/* EMPTY */
+/* =========================
+   EMPTY STATE
+========================= */
 .empty {
-  padding: 15px;
-  background: var(--card-bg);
-  border-radius: 10px;
-  color: var(--muted);
-  font-size: 14px;
+  padding: 20px;
   text-align: center;
   border: 1px dashed var(--border);
-}
-
-/* LOADING */
-.loading {
-  text-align: center;
-  padding: 40px;
-  font-size: 15px;
+  border-radius: 12px;
   color: var(--muted);
+  font-size: 14px;
 }
 
-/* ACTIONS */
+/* =========================
+   ACTIONS
+========================= */
 .actions {
   margin-top: 14px;
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
-/* BOTONES BASE */
+/* BOTÓN BASE */
 .btn {
   border: none;
-  padding: 6px 10px;
+  padding: 7px 11px;
   font-size: 12px;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.2s ease;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+/* PRIMARY */
+.btn {
   background: var(--primary);
   color: white;
 }
 
 .btn:hover {
   background: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
-/* SECUNDARIO */
+/* SECONDARY */
 .btn.secondary {
-  background: var(--border);
+  background: rgba(148, 163, 184, 0.15);
   color: var(--text);
 }
 
 .btn.secondary:hover {
-  filter: brightness(0.95);
+  background: rgba(148, 163, 184, 0.25);
 }
 
 /* DANGER */
 .btn.danger {
-  background: var(--danger);
-  color: white;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
 }
 
 .btn.danger:hover {
-  background: var(--danger-hover);
+  background: rgba(239, 68, 68, 0.25);
 }

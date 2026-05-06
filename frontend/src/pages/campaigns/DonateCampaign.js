@@ -38,6 +38,8 @@ function DonateCampaign() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const navigate = useNavigate();
+  const [isDragging, setIsDragging] = useState(false);
+  
   let currentUserId = null;
 
   if (token) {
@@ -59,29 +61,71 @@ function DonateCampaign() {
     loadCampaign();
   }, []);
 
-const handleImages = (e) => {
-  const files = Array.from(e.target.files);
+  const handleImages = (e) => {
+    const files = Array.from(e.target.files);
 
-  setImages((prev) => {
-    const combined = [...prev, ...files];
+    setImages((prev) => {
+      const combined = [...prev, ...files];
 
-    // evitar duplicados por nombre + size
-    const unique = combined.filter(
-      (file, index, self) =>
-        index === self.findIndex(
-          (f) => f.name === file.name && f.size === file.size
-        )
+      // evitar duplicados por nombre + size
+      const unique = combined.filter(
+        (file, index, self) =>
+          index === self.findIndex(
+            (f) => f.name === file.name && f.size === file.size
+          )
+      );
+
+      return unique;
+    });
+
+    const newPreviews = files.map((file) =>
+      URL.createObjectURL(file)
     );
 
-    return unique;
-  });
+    setImagePreviews((prev) => [...prev, ...newPreviews]);
+    };
 
-  const newPreviews = files.map((file) =>
-    URL.createObjectURL(file)
-  );
 
-  setImagePreviews((prev) => [...prev, ...newPreviews]);
-};
+    const addFiles = (files) => {
+    const newFiles = Array.from(files);
+
+    setImages((prev) => {
+      const combined = [...prev, ...newFiles];
+
+      const unique = combined.filter(
+        (file, index, self) =>
+          index === self.findIndex(
+            (f) => f.name === file.name && f.size === file.size
+          )
+      );
+
+      return unique;
+    });
+
+    const newPreviews = newFiles.map((file) =>
+      URL.createObjectURL(file)
+    );
+
+    setImagePreviews((prev) => [...prev, ...newPreviews]);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const files = e.dataTransfer.files;
+    addFiles(files);
+  };
+
 
   const loadCampaign = async () => {
     try {
@@ -199,17 +243,26 @@ const handleImages = (e) => {
                 <FileImage size={16} /> Imágenes de la donación
               </label>
 
-              <label className="file-upload-box">
+              <label
+                className={`file-upload-box drop-zone ${isDragging ? "dragging" : ""}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
                 <input
                   type="file"
                   multiple
                   accept="image/*"
-                  onChange={handleImages}
+                  onChange={(e) => addFiles(e.target.files)}
                 />
 
                 <div className="file-upload-ui">
                   <Plus size={18} />
-                  <span>Agregar imágenes</span>
+                  <span>
+                    {isDragging
+                      ? "Suelta las imágenes aquí"
+                      : "Arrastra o selecciona imágenes"}
+                  </span>
                 </div>
               </label>
 

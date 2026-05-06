@@ -75,7 +75,11 @@ const [form, setForm] = useState({
     let newValue = value;
 
     if (name === "image") {
-      setForm({ ...form, image: files[0] });
+      const file = files[0];
+
+      setForm({ ...form, image: file });
+      generatePreview(file); // 👈 FIX
+
       return;
     }
 
@@ -164,6 +168,50 @@ const [form, setForm] = useState({
     "adultos",
   ];
 
+  const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = React.useRef(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const generatePreview = (file) => {
+    if (!file) return;
+
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragActive(false);
+  };
+
+const handleDrop = (e) => {
+  e.preventDefault();
+  setDragActive(false);
+
+  const file = e.dataTransfer.files[0];
+
+  if (file) {
+    setForm({ ...form, image: file });
+    generatePreview(file); // 👈 FIX CLAVE
+  }
+};
+
+  const openFileDialog = () => {
+    fileInputRef.current.click();
+  };
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
 
 return (
     <div className="campaign-form-container">
@@ -200,9 +248,31 @@ return (
           </div>
 
           {/* IMAGEN */}
-          <div className="form-group">
-            <label>Imagen (opcional)</label>
-            <input type="file" name="image" onChange={handleChange} />
+          <div
+            className={`dropzone ${dragActive ? "active" : ""}`}
+            onClick={openFileDialog}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              name="image"
+              onChange={handleChange}
+              hidden
+            />
+
+            {/* PREVIEW */}
+            {imagePreview ? (
+              <img
+                src={imagePreview}
+                alt="preview"
+                className="image-preview"
+              />
+            ) : (
+              <p> Arrastra una imagen aquí o haz click</p>
+            )}
           </div>
 
           {/* FECHAS */}

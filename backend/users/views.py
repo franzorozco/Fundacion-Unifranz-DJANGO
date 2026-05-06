@@ -12,7 +12,6 @@ from .serializers import (
     VolunteerProfileSerializer
 )
 
-# 🔥 ESTE LO DEJAMOS PUBLICO PARA QUE FUNCIONE EL FRONT
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -28,7 +27,6 @@ class UserViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-# 🔒 ESTOS PUEDEN QUEDAR PROTEGIDOS
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer

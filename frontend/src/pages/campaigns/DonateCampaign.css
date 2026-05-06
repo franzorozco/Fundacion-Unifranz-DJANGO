@@ -372,3 +372,24 @@
     transform: rotate(360deg);
   }
 }
+
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  background: rgba(0,0,0,0.02);
+}
+
+.drop-zone.dragging {
+  border-color: var(--primary);
+  background: rgba(79, 70, 229, 0.1);
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.drop-zone input {
+  display: none;
+}

@@ -25,7 +25,6 @@ class Donation(models.Model):
         related_name="donations"
     )
 
-    # 🎯 destino flexible
     destination_type = models.CharField(
         max_length=20,
         choices=DestinationType.choices
@@ -45,7 +44,6 @@ class Donation(models.Model):
         default=DonationStatus.PENDING
     )
 
-    # 💰 si hay donación monetaria directa
     money_amount = models.DecimalField(
         max_digits=10,
         decimal_places=2,

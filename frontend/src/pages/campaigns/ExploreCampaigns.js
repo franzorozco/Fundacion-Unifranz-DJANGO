@@ -5,6 +5,7 @@ import {
   MapPin,
   Heart,
   HandHelping,
+  Globe
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
@@ -13,9 +14,9 @@ import { getCampaigns } from "../../services/campaignService";
 import "./ExploreCampaigns.css";
 import GlobeMap from "../../components/GlobeMap";
 
-
 function ExploreCampaigns() {
   const [campaigns, setCampaigns] = useState([]);
+  const [tab, setTab] = useState("campaigns");
 
   useEffect(() => {
     loadCampaigns();
@@ -37,7 +38,6 @@ function ExploreCampaigns() {
       }
 
       const featured = visible.find((c) => c.is_featured);
-
       const hero =
         featured ||
         [...visible].sort((a, b) => b.priority - a.priority)[0];
@@ -47,7 +47,6 @@ function ExploreCampaigns() {
         .sort((a, b) => b.priority - a.priority);
 
       setCampaigns([hero, ...others]);
-
     } catch (error) {
       console.error("Error cargando campañas", error);
     }
@@ -58,118 +57,136 @@ function ExploreCampaigns() {
       <InteractiveBackground />
       <Navbar />
 
-      {campaigns.length === 0 ? (
-        <div className="empty">No hay campañas disponibles</div>
-      ) : (
-        <>
-          {/* 🔥 HERO */}
-          <section
-            className="hero"
-            style={{
-              backgroundImage: `url(${campaigns[0].image || "/default.jpg"})`,
-            }}
-          >
-            <div className="hero-content">
-              <span className="badge">Campaña destacada</span>
+      {/* 🔥 HERO SIEMPRE VISIBLE */}
+      {campaigns.length > 0 && (
+        <section
+          className="hero"
+          style={{
+            backgroundImage: `url(${campaigns[0].image || "/default.jpg"})`,
+          }}
+        >
+          <div className="hero-content">
+            <span className="badge">Campaña destacada</span>
 
-              <h1>{campaigns[0].title}</h1>
+            <h1>{campaigns[0].title}</h1>
 
-              <p>{campaigns[0].description?.slice(0, 180)}...</p>
+            <p>{campaigns[0].description?.slice(0, 180)}...</p>
 
-              <div className="hero-info">
-                <span>
-                  <MapPin size={16} /> {campaigns[0].city}
-                </span>
-                <span>
-                  <Users size={16} /> {campaigns[0].total_volunteers}
-                </span>
-              </div>
-
-              <Link
-                to={`/campaigns/${campaigns[0].id}/participate`}
-                className="btn-primary"
-              >
-                <HandHelping size={18} />
-                Participar
-              </Link>
-
-              <Link to={`/campaigns/${campaigns[0].id}/donate`} className="btn-secondary">
-                <Heart size={18} />
-                Donar
-              </Link>
-
+            <div className="hero-info">
+              <span>
+                <MapPin size={16} /> {campaigns[0].city}
+              </span>
+              <span>
+                <Users size={16} /> {campaigns[0].total_volunteers}
+              </span>
             </div>
-          </section>
 
-          {/* 📦 GRID */}
-          <section className="campaigns-section">
-            <h2>Explorar campañas</h2>
+            <Link
+              to={`/campaigns/${campaigns[0].id}/participate`}
+              className="btn-primary"
+            >
+              <HandHelping size={18} />
+              Participar
+            </Link>
 
-            <div className="campaign-grid">
-              {campaigns.slice(1).map((c) => {
-                const progress = c.goal_amount
-                  ? (c.collected_amount / c.goal_amount) * 100
-                  : 0;
+            <Link
+              to={`/campaigns/${campaigns[0].id}/donate`}
+              className="btn-secondary"
+            >
+              <Heart size={18} />
+              Donar
+            </Link>
+          </div>
+        </section>
+      )}
 
-                return (
-                  <div className="campaign-card" key={c.id}>
-                    <div
-                      className="card-image"
-                      style={{
-                        backgroundImage: `url(${c.image || "/default.jpg"})`,
-                      }}
-                    />
+      {/* 🔥 TABS */}
+      <div className="tabs-container">
+        <button
+          className={tab === "campaigns" ? "tab active" : "tab"}
+          onClick={() => setTab("campaigns")}
+        >
+          <Heart size={16} /> Campañas
+        </button>
 
-                    <div className="card-content">
-                      <h3>{c.title}</h3>
+        <button
+          className={tab === "global" ? "tab active" : "tab"}
+          onClick={() => setTab("global")}
+        >
+          <Globe size={16} /> Actividades globales
+        </button>
+      </div>
 
-                      <p>{c.description}</p>
+      {/* 📦 SOLO CAMPAÑAS CAMBIAN */}
+      {tab === "campaigns" && (
+        <section className="campaigns-section">
+          <h2>Explorar campañas</h2>
 
-                      <div className="card-bottom">
-                        <div className="meta">
-                          <span>
-                            <MapPin size={14} /> {c.city}
-                          </span>
-                          <span>
-                            <Users size={14} /> {c.total_volunteers}
-                          </span>
-                        </div>
+          <div className="campaign-grid">
+            {campaigns.slice(1).map((c) => {
+              const progress = c.goal_amount
+                ? (c.collected_amount / c.goal_amount) * 100
+                : 0;
 
-                        {/* 📊 PROGRESO */}
-                        <div className="progress-bar">
-                          <div
-                            className="progress"
-                            style={{ width: `${progress}%` }}
-                          />
-                        </div>
+              return (
+                <div className="campaign-card" key={c.id}>
+                  <div
+                    className="card-image"
+                    style={{
+                      backgroundImage: `url(${c.image || "/default.jpg"})`,
+                    }}
+                  />
 
-                        <div className="progress-info">
-                          <span>{Math.round(progress)}%</span>
-                          <span>
-                            Bs {c.collected_amount} / {c.goal_amount}
-                          </span>
-                        </div>
+                  <div className="card-content">
+                    <h3>{c.title}</h3>
+                    <p>{c.description}</p>
+
+                    <div className="card-bottom">
+                      <div className="meta">
+                        <span>
+                          <MapPin size={14} /> {c.city}
+                        </span>
+                        <span>
+                          <Users size={14} /> {c.total_volunteers}
+                        </span>
                       </div>
 
-                      <Link
-                        to={`/campaigns/${c.id}/participate`}
-                        className="btn-secondary"
-                      >
-                        <HandHelping size={18} />
-                        Participar
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+                      <div className="progress-bar">
+                        <div
+                          className="progress"
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
 
-          <section className="map-section">
-            <h2>Mapa global de actividades</h2>
-            <GlobeMap />
-          </section>
-        </>
+                      <div className="progress-info">
+                        <span>{Math.round(progress)}%</span>
+                        <span>
+                          Bs {c.collected_amount} / {c.goal_amount}
+                        </span>
+                      </div>
+                    </div>
+
+                    <Link
+                      to={`/campaigns/${c.id}/participate`}
+                      className="btn-secondary"
+                    >
+                      <HandHelping size={18} />
+                      Participar
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* 🌍 SOLO MAPA CAMBIA */}
+      {tab === "global" && (
+        <section className="map-section">
+          <h2>Mapa global de actividades</h2>
+          <GlobeMap />
+        </section>
       )}
 
       <footer className="footer">

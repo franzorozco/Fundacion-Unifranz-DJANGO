@@ -5,7 +5,6 @@ from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 
-# 🔹 ROLES (sin choices, flexible)
 class Role(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -13,7 +12,6 @@ class Role(models.Model):
         return self.name
 
 
-# 🔹 USUARIO PERSONALIZADO
 class User(AbstractUser):
     email = models.EmailField(unique=True)
 
@@ -36,7 +34,6 @@ class User(AbstractUser):
         return self.email
 
 
-# 🔹 CATÁLOGO DE HABILIDADES
 class Skill(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -45,7 +42,6 @@ class Skill(models.Model):
         return self.name
 
 
-# 🔹 PERFIL DEL VOLUNTARIO (IA READY)
 class VolunteerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 
@@ -69,7 +65,6 @@ class VolunteerProfile(models.Model):
         return f"Perfil de {self.user.email}"
 
 
-# 🔹 RELACIÓN USUARIO - HABILIDADES (CON PESO)
 class UserSkill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='skills')
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
@@ -88,7 +83,6 @@ class UserSkill(models.Model):
         return f"{self.user.email} - {self.skill.name}"
 
 
-# 🔹 DISPONIBILIDAD (TIPO HORARIO)
 class Availability(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='availability')
 
@@ -114,7 +108,6 @@ class Availability(models.Model):
         return f"{self.user.email} - {self.day}"
 
 
-# 🔹 SIGNAL PARA CREAR ROLES POR DEFECTO Y SUPERUSUARIO
 @receiver(post_migrate)
 def create_default_roles_and_superuser(sender, **kwargs):
     UserModel = get_user_model()

@@ -48,9 +48,9 @@ function Dashboard() {
         if (Array.isArray(data)) {
           setDonaciones(data);
         } else if (Array.isArray(data.results)) {
-          setDonaciones(data.results); // Django con paginación
+          setDonaciones(data.results); 
         } else {
-          setDonaciones([]); // fallback seguro
+          setDonaciones([]); 
         }
 
         setLoading(false);

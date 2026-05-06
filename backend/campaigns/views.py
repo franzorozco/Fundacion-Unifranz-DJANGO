@@ -108,6 +108,12 @@ def activity_location(request, pk):
         "location_id": location.id
     })
 
+@api_view(["DELETE"])
+def api_cancel_application(request, pk):
+    application = ActivityVolunteer.objects.get(id=pk)
+    application.delete()
+    return Response({"ok": True})
+    
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def activity_skills(request, pk):

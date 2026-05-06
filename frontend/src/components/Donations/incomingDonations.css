@@ -1,0 +1,60 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+}
+
+
+.large-modal {
+  width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.section {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.item-card {
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.images-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.donation-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.tracking-item {
+  background: #fafafa;
+  padding: 8px;
+  border-left: 3px solid #4caf50;
+  margin-bottom: 5px;
+}

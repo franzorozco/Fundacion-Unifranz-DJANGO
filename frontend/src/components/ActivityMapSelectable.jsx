@@ -21,14 +21,14 @@ useEffect(() => {
       lng: Number(initialLng),
     });
   } else {
-    setPosition(null); // 👈 limpia mapa si no hay data
+    setPosition(null);
   }
 }, [initialLat, initialLng]);
 
   if (!isLoaded) return <p>Cargando mapa...</p>;
 
   const handleClick = (e) => {
-    if (!editable) return; // 🚫 no permite cambiar
+    if (!editable) return;
 
     const pos = {
       lat: e.latLng.lat(),

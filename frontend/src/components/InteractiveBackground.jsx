@@ -19,7 +19,6 @@ export default function InteractiveBackground() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // 🔻 Menos partículas si la pantalla es chica
     const PARTICLE_COUNT = window.innerWidth < 768 ? 40 : 70;
 
     const handleMouseMove = (e) => {
@@ -35,7 +34,6 @@ export default function InteractiveBackground() {
         alpha: 1,
       });
 
-      // 🔻 menos partículas en explosión
       for (let i = 0; i < 10; i++) {
         particles.push({
           x: e.x,
@@ -55,7 +53,6 @@ export default function InteractiveBackground() {
     window.addEventListener("click", handleClick);
     window.addEventListener("resize", handleResize);
 
-    // partículas base
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -73,7 +70,6 @@ export default function InteractiveBackground() {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // 🔥 explosiones
       for (let i = explosions.length - 1; i >= 0; i--) {
         const exp = explosions[i];
         exp.radius += 3;
@@ -88,7 +84,6 @@ export default function InteractiveBackground() {
         if (exp.alpha <= 0) explosions.splice(i, 1);
       }
 
-      // 🔗 conexiones limitadas
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
@@ -98,7 +93,6 @@ export default function InteractiveBackground() {
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-        // 🧲 interacción mouse (sin sqrt)
         if (mouse.x !== null) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
@@ -110,13 +104,11 @@ export default function InteractiveBackground() {
           }
         }
 
-        // 🔵 partícula simple (sin gradient)
         ctx.beginPath();
         ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(59,170,216,0.8)";
         ctx.fill();
 
-        // 🔗 conexiones limitadas (solo siguientes partículas)
         for (let j = i + 1; j < i + 10 && j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;

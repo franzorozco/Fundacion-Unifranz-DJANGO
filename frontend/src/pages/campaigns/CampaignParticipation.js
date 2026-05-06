@@ -31,7 +31,7 @@ function CampaignParticipation() {
 
     if (token) {
     const decoded = jwtDecode(token);
-    currentUserId = decoded.user_id; // o "id" según tu backend
+    currentUserId = decoded.user_id;
     }
 
     const [campaign, setCampaign] = useState(null);
@@ -70,7 +70,7 @@ function CampaignParticipation() {
       setCampaign(res.data);
 
       const actRes = await getCampaignActivities(id);
-
+      console.log("ACTIVITIES RESPONSE:", actRes.data);
       setActivities(
         actRes.data?.results ? actRes.data.results : actRes.data
       );
@@ -82,7 +82,6 @@ function CampaignParticipation() {
     }
   };
 
-  // 🔥 POSTULARSE A UNA ACTIVIDAD (NO CAMPAÑA)
 const handleApply = async (e) => {
   e.preventDefault();
 
@@ -196,13 +195,13 @@ const handleApply = async (e) => {
                 <span><Activity size={14} /> {a.status}</span>
                 </div>
 
-                                {a.location && (
-                                <div className="cp-location">
-                                    📍 {a.location.city} - {a.location.address}
-                                </div>
-                                )}
+                {a.location && (
+                <div className="cp-location">
+                    📍 {a.location.city} - {a.location.address}
+                </div>
+                )}
 
-                                {/* 🟡 indicador de selección */}
+                {/* indicador de selección */}
                 {selectedActivity === a.id && (
                 <div className="cp-selected">
                     <CheckCircle size={16} />
@@ -215,86 +214,96 @@ const handleApply = async (e) => {
         </div>
       </div>
 
-{selectedActivity && selectedActivityData && (
-  <div className="cp-form-layout">
-    
-    {/* FORM */}
-    <div className="cp-formBox cp-form-animated">
-      <h2>
-        <MessageSquare size={18} /> Postularse a actividad
-      </h2>
+      {selectedActivity && selectedActivityData && (
+        <div className="cp-form-layout">
+          
+          {/* FORM */}
+          <div className="cp-formBox cp-form-animated">
+            <h2>
+              <MessageSquare size={18} /> Postularse a actividad
+            </h2>
 
-      <form onSubmit={handleApply}>
-        <textarea
-          placeholder="Mensaje opcional para el coordinador..."
-          value={form.message}
-          onChange={(e) =>
-            setForm({ ...form, message: e.target.value })
-          }
-        />
+            <form onSubmit={handleApply}>
+              <textarea
+                placeholder="Mensaje opcional para el coordinador..."
+                value={form.message}
+                onChange={(e) =>
+                  setForm({ ...form, message: e.target.value })
+                }
+              />
 
-        <button
-        type="submit"
-        disabled={!selectedActivity || isAlreadyApplied}
-        className={`cp-btn ${
-            isAlreadyApplied ? "cp-btn-disabled" : ""
-        }`}
-        >
-        <Send size={18} />
+              <button
+              type="submit"
+              disabled={!selectedActivity || isAlreadyApplied}
+              className={`cp-btn ${
+                  isAlreadyApplied ? "cp-btn-disabled" : ""
+              }`}
+              >
+              <Send size={18} />
 
-        {!selectedActivity
-            ? "Selecciona una actividad"
-            : isAlreadyApplied
-            ? "Ya estás postulado"
-            : "Confirmar postulación"}
-        </button>
-      </form>
-    </div>
+              {!selectedActivity
+                  ? "Selecciona una actividad"
+                  : isAlreadyApplied
+                  ? "Ya estás postulado"
+                  : "Confirmar postulación"}
+              </button>
+            </form>
+          </div>
 
-    {/* SKILLS PANEL */}
-    <div className="cp-skillsBox">
-      <h3>
-        <Activity size={18} /> Requisitos de la actividad
-      </h3>
+          {/* SKILLS PANEL */}
+          <div className="cp-skillsBox">
+            <h3>
+              <Activity size={18} /> Requisitos de la actividad
+            </h3>
 
-      {selectedActivityData.skill_requirements?.length > 0 ? (
-        selectedActivityData.skill_requirements.map((s, i) => (
-          <div key={i} className="cp-skill-item">
-            <div className="cp-skill-name">
-              {s.skill?.name}
-            </div>
+            {selectedActivityData.skill_requirements?.length > 0 ? (
+              selectedActivityData.skill_requirements.map((s, i) => (
+                <div key={i} className="cp-skill-item">
+                  <div className="cp-skill-name">
+                    {s.skill?.name}
+                  </div>
 
-            <div className="cp-skill-level">
-              Nivel requerido: {s.required_level}
-            </div>
+                  <div className="cp-skill-level">
+                    Nivel requerido: {s.required_level}
+                  </div>
 
-            {s.is_mandatory && (
-              <span className="cp-skill-badge">Obligatorio</span>
+                  {s.is_mandatory && (
+                    <span className="cp-skill-badge">Obligatorio</span>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p className="cp-muted">No hay requisitos definidos</p>
             )}
           </div>
-        ))
-      ) : (
-        <p className="cp-muted">No hay requisitos definidos</p>
-      )}
-    </div>
 
-  </div>
-)}
+        </div>
+      )}
       {/* PARTICIPANTES */}
       <div className="cp-section">
         <h2>Participantes por actividad</h2>
 
-        <div className="cp-participants">
-          {activities.map((a) =>
-            a.volunteers?.map((v, i) => (
-              <div key={`${a.id}-${i}`} className="cp-participant">
-                <User size={16} />
-                {v.user?.username || "Usuario"}
-                <span>{v.status}</span>
-              </div>
-            ))
-          )}
-        </div>
+          <div className="cp-participants">
+            {activities.map((a) => {
+              const approved = a.volunteers?.filter(
+                (v) => v.status === "approved"
+              );
+
+              return approved?.length > 0 ? (
+                approved.map((v, i) => (
+                  <div key={`${a.id}-${i}`} className="cp-participant">
+                    <User size={16} />
+                    {v.user?.username || "Usuario"}
+                    <span className="approved">Aprobado</span>
+                  </div>
+                ))
+              ) : (
+                <div key={a.id} className="cp-empty">
+                  Sin participantes aprobados
+                </div>
+              );
+            })}
+          </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ class SkillSerializer(serializers.ModelSerializer):
 class UserSkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSkill
-        exclude = ["user"]  # 🔥 mejor que required=False
+        exclude = ["user"]
 
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):

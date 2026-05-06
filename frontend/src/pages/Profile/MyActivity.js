@@ -2,6 +2,7 @@
     import Navbar from "../../components/Navbar";
     import api from "../../services/api";
     import "./MyActivity.css";
+    import { useNavigate } from "react-router-dom";
 
     function MyActivity() {
     const [data, setData] = useState({
@@ -9,7 +10,7 @@
         activities: [],
         });
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate();
     useEffect(() => {
         loadActivity();
     }, []);
@@ -26,6 +27,15 @@
         }
         };
         
+        const cancelApplication = async (id) => {
+        try {
+            await api.delete(`/activity-volunteers/${id}/`);
+            loadActivity(); // recargar datos
+        } catch (err) {
+            console.error("Error cancelando postulación", err);
+        }
+        };
+
     if (loading) return <div className="loading">Cargando actividad...</div>;
 
     return (
@@ -63,8 +73,18 @@
                         ))}
                     </div>
                     <div className="actions">
-                    <button className="btn secondary">Ver detalle</button>
-                    <button className="btn">Ver campaña</button>
+                    <button
+                    className="btn secondary"
+                    onClick={() => navigate(`/donations/${d.id}`)}
+                    >
+                    Ver detalle
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={() => navigate(`/campaigns/${d.campaign?.id}`)}
+                        >
+                        Ver campaña
+                    </button>
                     <button className="btn danger">Comprobante</button>
                     </div>
                     </div>
@@ -93,10 +113,15 @@
 
                     <p>Postulado: {new Date(a.applied_at).toLocaleString()}</p>
                     <div className="actions">
-  <button className="btn secondary">Ver actividad</button>
-  <button className="btn">Ver campaña</button>
-  <button className="btn danger">Cancelar postulación</button>
-</div>
+                        <button className="btn secondary">Ver actividad</button>
+                        <button className="btn">Ver campaña</button>
+                            <button
+                            className="btn danger"
+                            onClick={() => cancelApplication(a.id)}
+                            >
+                            Cancelar postulación
+                            </button>
+                        </div>
                     </div>
                     
                 ))

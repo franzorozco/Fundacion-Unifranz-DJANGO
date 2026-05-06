@@ -2,11 +2,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import RetrieveAPIView
 
-import json
-
-from .models import Donation, DonationItem
+from .models import Donation, DonationItem, DonationImage
 from campaigns.models import ActivityVolunteer
+from .serializers import DonationSerializer
+
 from .services import (
     get_donations_by_user,
     get_donations_by_campaign,
@@ -15,81 +16,91 @@ from .services import (
     get_campaign_donation_summary
 )
 
+import json
+
+
 # =========================
-# CREAR DONACIÓN
+# DETAIL DONATION
+# =========================
+class DonationDetailView(RetrieveAPIView):
+    queryset = Donation.objects.all()
+    serializer_class = DonationSerializer
+
+
+# =========================
+# CREATE DONATION
 # =========================
 @api_view(["POST"])
 def api_create_donation(request):
 
-    data = request.data
-    items = data.get("items", [])
+    try:
+        data = request.data
+        items = data.get("items", [])
+        files = request.FILES.getlist("images")
 
-    if isinstance(items, str):
-        items = json.loads(items)
+        if isinstance(items, str):
+            items = json.loads(items)
 
-    donation = Donation.objects.create(
-        donor_id=data["donor_id"],
-        destination_type=data["destination_type"],
-        campaign_id=data.get("campaign_id"),
-        money_amount=data.get("money_amount"),
-        notes=data.get("notes")
-    )
-
-    for item in items:
-        DonationItem.objects.create(
-            donation=donation,
-            name=item.get("name"),
-            quantity=item.get("quantity", 1),
-            condition=item.get("condition", "good")
+        donation = Donation.objects.create(
+            donor_id=data.get("donor_id"),
+            destination_type=data.get("destination_type"),
+            campaign_id=data.get("campaign_id"),
+            money_amount=data.get("money_amount") or 0,
+            notes=data.get("notes") or ""
         )
 
-    return Response({"ok": True, "donation_id": donation.id})
+        for item in items:
+            DonationItem.objects.create(
+                donation=donation,
+                name=item.get("name"),
+                quantity=item.get("quantity", 1),
+                condition=item.get("condition", "good")
+            )
+
+        for file in files:
+            DonationImage.objects.create(
+                donation=donation,
+                image=file
+            )
+
+        return Response(DonationSerializer(donation).data)
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
 
 
 # =========================
-# DONACIONES POR USUARIO
+# ALL DONATIONS
+# =========================
+@api_view(["GET"])
+def api_all_donations(request):
+
+    donations = Donation.objects.all().order_by("-created_at")
+    return Response(DonationSerializer(donations, many=True).data)
+
+
+# =========================
+# USER DONATIONS
 # =========================
 @api_view(["GET"])
 def api_user_donations(request, user_id):
 
-    donations = get_donations_by_user(user_id)
-
-    return Response({
-        "user_id": user_id,
-        "results": [
-            {
-                "id": d.id,
-                "status": d.status,
-                "created_at": d.created_at
-            }
-            for d in donations
-        ]
-    })
+    donations = Donation.objects.filter(donor_id=user_id).order_by("-created_at")
+    return Response(DonationSerializer(donations, many=True).data)
 
 
 # =========================
-# DONACIONES POR CAMPAÑA
+# CAMPAIGN DONATIONS
 # =========================
 @api_view(["GET"])
 def api_campaign_donations(request, campaign_id):
 
-    donations = get_donations_by_campaign(campaign_id)
-
-    return Response({
-        "campaign_id": campaign_id,
-        "results": [
-            {
-                "id": d.id,
-                "donor": d.donor.email,
-                "status": d.status
-            }
-            for d in donations
-        ]
-    })
+    donations = Donation.objects.filter(campaign_id=campaign_id)
+    return Response(DonationSerializer(donations, many=True).data)
 
 
 # =========================
-# ACTUALIZAR ESTADO
+# UPDATE STATUS
 # =========================
 @api_view(["PATCH"])
 def api_update_status(request, donation_id):
@@ -107,45 +118,27 @@ def api_update_status(request, donation_id):
 
 
 # =========================
-# VALOR DONACIÓN
+# DONATION VALUE
 # =========================
 @api_view(["GET"])
 def api_donation_value(request, donation_id):
 
     value = calculate_donation_value(donation_id)
-
     return Response({"total_value": value})
 
 
 # =========================
-# RESUMEN CAMPAÑA
+# CAMPAIGN SUMMARY
 # =========================
 @api_view(["GET"])
 def api_campaign_summary(request, campaign_id):
 
     summary = get_campaign_donation_summary(campaign_id)
-
     return Response(summary)
 
 
-@api_view(["GET"])
-def api_all_donations(request):
-    donations = Donation.objects.all().order_by("-created_at")
-
-    return Response([
-        {
-            "id": d.id,
-            "donor": d.donor.email,
-            "destination_type": d.destination_type,
-            "status": d.status,
-            "money_amount": d.money_amount,
-            "created_at": d.created_at
-        }
-        for d in donations
-    ])
-    
 # =========================
-# ACTIVIDAD USUARIO
+# MY ACTIVITY
 # =========================
 class MyActivityView(APIView):
     permission_classes = [IsAuthenticated]
@@ -155,27 +148,10 @@ class MyActivityView(APIView):
         user = request.user
 
         donations = Donation.objects.filter(donor=user)
-
         activities = ActivityVolunteer.objects.filter(user=user)
 
         return Response({
-            "donations": [
-                {
-                    "id": d.id,
-                    "campaign": d.campaign.title if d.campaign else "Sin campaña",
-                    "status": d.status,
-                    "money_amount": d.money_amount,
-                    "created_at": d.created_at,
-                    "items": [
-                        {
-                            "name": i.name,
-                            "quantity": i.quantity
-                        } for i in d.donationitem_set.all()
-                    ]
-                }
-                for d in donations
-            ],
-
+            "donations": DonationSerializer(donations, many=True).data,
             "activities": [
                 {
                     "id": a.id,

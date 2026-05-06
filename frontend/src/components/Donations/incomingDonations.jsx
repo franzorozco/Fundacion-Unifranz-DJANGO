@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
+
+import "./incomingDonations.css";
 import { getDonations, updateDonationStatus } from "../../services/donationService";
 
 function IncomigDonations() {
@@ -8,6 +10,18 @@ function IncomigDonations() {
   const [orderBy, setOrderBy] = useState("id_desc");
 
   const token = localStorage.getItem("token");
+  const [selectedDonation, setSelectedDonation] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const openReview = (donation) => {
+  setSelectedDonation(donation);
+  setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setSelectedDonation(null);
+    setShowModal(false);
+  };
 
   const loadDonations = async () => {
     const res = await getDonations(token);
@@ -101,11 +115,16 @@ function IncomigDonations() {
               {processed.map((d) => (
                 <tr key={d.id}>
                   <td>{d.id}</td>
-                  <td>{d.donor}</td>
+
+                  {/* DONANTE ✔ FIX */}
+                  <td>
+                    {d.donor?.username} <br />
+                    <small style={{ opacity: 0.6 }}>{d.donor?.email}</small>
+                  </td>
+
                   <td>{d.destination_type}</td>
                   <td>{d.money_amount || 0} Bs</td>
 
-                  {/* STATUS BADGE */}
                   <td>
                     <span className={`status ${d.status}`}>
                       {d.status}
@@ -116,9 +135,15 @@ function IncomigDonations() {
                     {new Date(d.created_at).toLocaleDateString()}
                   </td>
 
-                  {/* ACTIONS */}
                   <td>
                     <div className="table-actions">
+
+                      <button
+                        className="small-btn"
+                        onClick={() => openReview(d)}
+                      >
+                        Revisar
+                      </button>
 
                       {d.status === "pending" && (
                         <>
@@ -138,12 +163,6 @@ function IncomigDonations() {
                         </>
                       )}
 
-                      {d.status !== "pending" && (
-                        <span style={{ fontSize: "12px", opacity: 0.6 }}>
-                          Sin acciones
-                        </span>
-                      )}
-
                     </div>
                   </td>
                 </tr>
@@ -159,6 +178,134 @@ function IncomigDonations() {
             <p>Cuando los usuarios donen aparecerán aquí</p>
           </div>
         )}
+
+        {showModal && selectedDonation && (
+          <div className="modal-overlay" onClick={closeModal}>
+            <div
+              className="modal-content large-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+
+              <h2>Detalle completo de donación</h2>
+
+              {/* ===================== */}
+              {/* GENERAL */}
+              {/* ===================== */}
+              <div className="section">
+                <h3>Información general</h3>
+
+                <p><strong>ID:</strong> {selectedDonation.id}</p>
+                <p><strong>Estado:</strong> {selectedDonation.status}</p>
+                <p><strong>Monto:</strong> {selectedDonation.money_amount || 0} Bs</p>
+                <p><strong>Fecha:</strong> {new Date(selectedDonation.created_at).toLocaleString()}</p>
+                <p><strong>Notas:</strong> {selectedDonation.notes || "N/A"}</p>
+              </div>
+
+              {/* ===================== */}
+              {/* DONANTE */}
+              {/* ===================== */}
+              <div className="section">
+                <h3>Donante</h3>
+
+                <p><strong>Nombre:</strong> {selectedDonation.donor?.username}</p>
+                <p><strong>Email:</strong> {selectedDonation.donor?.email}</p>
+              </div>
+
+              {/* ===================== */}
+              {/* CAMPAÑA */}
+              {/* ===================== */}
+              <div className="section">
+                <h3>Campaña</h3>
+
+                {selectedDonation.campaign ? (
+                  <>
+                    <p><strong>Título:</strong> {selectedDonation.campaign.title}</p>
+                    <p><strong>ID:</strong> {selectedDonation.campaign.id}</p>
+                  </>
+                ) : (
+                  <p>Donación a fundación general</p>
+                )}
+              </div>
+
+              {/* ===================== */}
+              {/* ITEMS */}
+              {/* ===================== */}
+              <div className="section">
+                <h3>Items</h3>
+
+                {selectedDonation.items?.length > 0 ? (
+                  selectedDonation.items.map((item) => (
+                    <div key={item.id} className="item-card">
+                      <p><strong>Nombre:</strong> {item.name}</p>
+                      <p><strong>Cantidad:</strong> {item.quantity}</p>
+                      <p><strong>Estado:</strong> {item.condition}</p>
+                      <p><strong>Valor:</strong> {item.estimated_value || 0} Bs</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No hay items</p>
+                )}
+              </div>
+
+              {/* ===================== */}
+              {/* IMÁGENES */}
+              {/* ===================== */}
+              <div className="section">
+                <h3>Imágenes</h3>
+
+                  <div className="images-grid">
+                    {selectedDonation.images?.length > 0 ? (
+                      selectedDonation.images.map((img) => (
+                        <img
+                          key={img.id}
+                          src={img.image || "/default-image.png"}
+                          alt="donación"
+                          className="donation-img"
+                          onError={(e) => {
+                            e.target.src = "/default-image.png";
+                          }}
+                        />
+                      ))
+                    ) : (
+                      <img
+                        src="/default-image.png"
+                        alt="sin imágenes"
+                        className="donation-img"
+                      />
+                    )}
+                  </div>
+              </div>
+
+              {/* ===================== */}
+              {/* TRACKING */}
+              {/* ===================== */}
+              <div className="section">
+                <h3>Historial</h3>
+
+                {selectedDonation.tracking?.length > 0 ? (
+                  selectedDonation.tracking.map((t) => (
+                    <div key={t.id} className="tracking-item">
+                      <p><strong>{t.event}</strong></p>
+                      <p>{t.description || "Sin descripción"}</p>
+                      <small>{new Date(t.created_at).toLocaleString()}</small>
+                    </div>
+                  ))
+                ) : (
+                  <p>Sin historial</p>
+                )}
+              </div>
+
+              {/* BOTÓN */}
+              <div style={{ marginTop: "20px" }}>
+                <button className="small-btn" onClick={closeModal}>
+                  Cerrar
+                </button>
+              </div>
+
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

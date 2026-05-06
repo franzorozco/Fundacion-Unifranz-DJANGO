@@ -315,3 +315,78 @@
   border-radius: 20px;
   box-shadow: 0 30px 80px rgba(0,0,0,0.15);
 }
+
+
+/* ========================= */
+/* 🔥 TABS STYLED NAVIGATION */
+/* ========================= */
+
+.explore .tabs-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 30px auto 10px;
+  padding: 10px;
+  width: fit-content;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* TAB BUTTON */
+.explore .tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+  border-radius: 40px;
+  border: none;
+  background: transparent;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-light);
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* HOVER */
+.explore .tab:hover {
+  background: rgba(0, 123, 255, 0.08);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* ACTIVE TAB */
+.explore .tab.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.25);
+}
+
+/* ICONS */
+.explore .tab svg {
+  transition: transform 0.2s ease;
+}
+
+.explore .tab.active svg {
+  transform: scale(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .explore .tabs-container {
+    width: 90%;
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .explore .tab {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}

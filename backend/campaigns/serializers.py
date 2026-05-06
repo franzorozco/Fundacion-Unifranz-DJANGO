@@ -45,6 +45,7 @@ class ActivityLocationSerializer(serializers.ModelSerializer):
 class CampaignActivitySerializer(serializers.ModelSerializer):
     location = ActivityLocationSerializer(read_only=True)
     skill_requirements = ActivitySkillRequirementSerializer(many=True, read_only=True)
+    volunteers = ActivityVolunteerSerializer(many=True, read_only=True)
 
     class Meta:
         model = CampaignActivity
@@ -68,5 +69,5 @@ class CampaignSerializer(serializers.ModelSerializer):
     def get_total_volunteers(self, obj):
         return ActivityVolunteer.objects.filter(
             activity__campaign=obj,
-            status="approved"  # o applied si quieres total postulados
+            status="approved"
         ).count()
